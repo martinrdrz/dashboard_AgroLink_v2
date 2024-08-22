@@ -27,9 +27,10 @@ export const useAuthStore = () => {
             );
         } catch (error) {
             dispatch(onLogout('Credenciales incorrectas'));
-            // setTimeout(() => {
-            //     dispatch(clearErrorMesage());
-            // }, 20);
+            //El siguiente codigo es para que se borre el mensaje de "Credenciales incorrectas" luego de un tiempo, pero le da suficiente tiempo para que reacciones la apertura de la ventana de Swal.fire() para mostrar el mensaje anterior, ya que se esta monitoreando el estado de errorMessage.
+            setTimeout(() => {
+                dispatch(clearErrorMesage());
+            }, 20);
         }
     };
 
