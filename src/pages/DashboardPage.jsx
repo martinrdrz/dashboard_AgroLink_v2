@@ -13,21 +13,9 @@ import {
 export const DashboardPage = () => {
     return (
         <>
-            <Typography variant="h5" marginBottom={2}>
+            <Typography variant='h5' marginBottom={2}>
                 Dashboard
             </Typography>
-            <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
-                <ResponsiveGridLayout />
-                {/* <ResponsiveGrid /> */}
-                {/* <ResponsiveFlexLayout />
-                <ColorCard colorFondo="Pink" />
-                <ColorCard colorFondo="PaleGreen" />
-                <ColorCard colorFondo="PaleTurquoise" />
-                <DetalleCardBlue />
-                <DetalleCardRed />
-                <TextCard />
-                <TextCard /> */}
-            </Box>
         </>
     );
 };

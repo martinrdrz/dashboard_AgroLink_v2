@@ -5,3 +5,4 @@ export * from './ResponsiveGrid';
 export * from './TextCard';
 export * from './ResponsiveGridLayout';
 export * from './ResponsiveFlexLayout';
+export * from './RectangularComponent';
