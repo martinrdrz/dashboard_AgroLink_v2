@@ -10,15 +10,15 @@ import {
     ResponsiveFlexLayout,
 } from '../components/dashboard';
 
-export const DashboardPage = () => {
+export const WidgetPage = () => {
     return (
         <>
             <Typography variant="h5" marginBottom={2}>
-                Dashboard
+                Widget
             </Typography>
             <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
-                <ResponsiveGridLayout />
                 {/* <ResponsiveGrid /> */}
+                <ResponsiveGridLayout />
                 {/* <ResponsiveFlexLayout />
                 <ColorCard colorFondo="Pink" />
                 <ColorCard colorFondo="PaleGreen" />

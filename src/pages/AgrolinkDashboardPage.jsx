@@ -3,6 +3,7 @@ import InboxIcon from '@mui/icons-material/Inbox';
 import DraftsIcon from '@mui/icons-material/Drafts';
 import DashboardIcon from '@mui/icons-material/Dashboard';
 import LogoutIcon from '@mui/icons-material/Logout';
+import GridViewIcon from '@mui/icons-material/GridView';
 import { SideBar } from '../components/navbar/SideBar';
 
 const navArrayLinks = [
@@ -15,6 +16,11 @@ const navArrayLinks = [
         title: 'Dashboard',
         path: '/dashboard',
         icon: <DashboardIcon />,
+    },
+    {
+        title: 'Widgets',
+        path: '/widgets',
+        icon: <GridViewIcon />,
     },
     {
         title: 'Products',
@@ -33,7 +39,7 @@ const navArrayLinks = [
     },
 ];
 
-export const C4DashboardPage = () => {
+export const AgrolinkDashboardPage = () => {
     return (
         <>
             <SideBar navArrayLinks={navArrayLinks} />

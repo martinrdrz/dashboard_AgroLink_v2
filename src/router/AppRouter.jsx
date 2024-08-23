@@ -1,5 +1,5 @@
 import { Navigate, Route, Routes } from 'react-router-dom';
-import { LoginPage, C4DashboardPage } from '../pages';
+import { LoginPage, AgrolinkDashboardPage } from '../pages';
 import { useAuthStore } from '../hooks';
 import { useEffect } from 'react';
 
@@ -23,7 +23,7 @@ export const AppRouter = () => {
                 </>
             ) : (
                 <>
-                    <Route path="/*" element={<C4DashboardPage />} />
+                    <Route path="/*" element={<AgrolinkDashboardPage />} />
                 </>
             )}
         </Routes>
