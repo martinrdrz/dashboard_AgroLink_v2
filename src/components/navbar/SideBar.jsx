@@ -20,6 +20,7 @@ import { DashboardArea } from './DashboardArea';
 import { Button } from '@mui/material';
 import LogoutIcon from '@mui/icons-material/Logout';
 import { useAuthStore } from '../../hooks';
+import fondoImg from '../../assets/textoAgrolink.png';
 
 const drawerWidth = 240;
 
@@ -104,7 +105,16 @@ export const SideBar = ({ navArrayLinks }) => {
     };
     return (
         <Box sx={{ display: 'flex' }}>
-            <AppBar position='fixed' open={open}>
+            <AppBar
+                position='fixed'
+                open={open}
+                sx={{
+                    backgroundImage: `url(${fondoImg})`,
+                    backgroundSize: '35% auto',
+                    backgroundPosition: 'center',
+                    backgroundRepeat: 'no-repeat',
+                }}
+            >
                 <Toolbar>
                     <IconButton
                         color='inherit'
