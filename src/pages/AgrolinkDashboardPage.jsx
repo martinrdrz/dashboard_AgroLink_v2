@@ -5,6 +5,9 @@ import DashboardIcon from '@mui/icons-material/Dashboard';
 import LogoutIcon from '@mui/icons-material/Logout';
 import GridViewIcon from '@mui/icons-material/GridView';
 import { SideBar } from '../components/navbar/SideBar';
+import { agrolinkApi } from '../api/agrolinkApi';
+import { useEffect } from 'react';
+import { useState } from 'react';
 
 const navArrayLinks = [
     {
@@ -40,9 +43,33 @@ const navArrayLinks = [
 ];
 
 export const AgrolinkDashboardPage = () => {
+    const [systemUserData, setSystemUserData] = useState({});
+
+    useEffect(() => {
+        const getSystemData = async () => {
+            try {
+                setSystemUserData({
+                    dataState: 'loading',
+                });
+                const { data } = await agrolinkApi.get('/sistemas/martinrdrz@hotmail.com');
+                setSystemUserData({
+                    dataState: 'ready',
+                    ...data,
+                });
+            } catch (error) {
+                setSystemUserData({
+                    dataState: 'error',
+                    msg: data.msg,
+                });
+            }
+        };
+
+        getSystemData();
+    }, []);
+
     return (
         <>
-            <SideBar navArrayLinks={navArrayLinks} />
+            <SideBar navArrayLinks={navArrayLinks} systemUserData={systemUserData} />
         </>
     );
 };

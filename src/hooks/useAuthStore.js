@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from 'react-redux';
-import { authApi } from '../api/authApi';
+import { agrolinkApi } from '../api/agrolinkApi';
 import { checking, clearErrorMesage, onLogin, onLogout } from '../store';
 
 export const useAuthStore = () => {
@@ -10,11 +10,7 @@ export const useAuthStore = () => {
     const startLogin = async ({ email, password }) => {
         dispatch(checking());
         try {
-            //const { data } = await calendarApi.post('/auth', { email, password });
-            // const { data } = {
-            //     data: { name: 'martin', uid: 'uidailkmalksd83290834a', token: 'tokenaskdalksjdajsdl983749823eklsd' },
-            // };
-            const { data } = await authApi.post('/auth', { email, password });
+            const { data } = await agrolinkApi.post('/auth', { email, password });
             localStorage.setItem('token', data.token);
             localStorage.setItem('token-init-date', new Date().getTime());
             dispatch(
@@ -44,7 +40,7 @@ export const useAuthStore = () => {
         const token = localStorage.getItem('token');
         if (!token) return dispatch(onLogout());
         try {
-            const { data } = await authApi.get('/auth/renew');
+            const { data } = await agrolinkApi.get('/auth/renew');
             localStorage.setItem('token', data.token);
             localStorage.setItem('token-init-date', new Date().getTime());
             dispatch(onLogin({ uid: data.uid, name: data.name, email: data.email }));

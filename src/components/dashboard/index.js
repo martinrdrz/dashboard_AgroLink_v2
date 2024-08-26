@@ -6,3 +6,5 @@ export * from './TextCard';
 export * from './ResponsiveGridLayout';
 export * from './ResponsiveFlexLayout';
 export * from './RectangularComponent';
+export * from './UserSystemData';
+export * from './SystemData';

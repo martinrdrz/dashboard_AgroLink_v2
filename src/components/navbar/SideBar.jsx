@@ -87,7 +87,7 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
     }),
 }));
 
-export const SideBar = ({ navArrayLinks }) => {
+export const SideBar = ({ navArrayLinks, systemUserData }) => {
     const theme = useTheme();
     const [open, setOpen] = React.useState(false);
     const { startLogout } = useAuthStore();
@@ -106,21 +106,24 @@ export const SideBar = ({ navArrayLinks }) => {
     return (
         <Box sx={{ display: 'flex' }}>
             <AppBar
-                position='fixed'
+                position="fixed"
                 open={open}
                 sx={{
                     backgroundImage: `url(${fondoImg})`,
                     backgroundSize: '35% auto',
                     backgroundPosition: 'center',
                     backgroundRepeat: 'no-repeat',
+                    [theme.breakpoints.down('md')]: {
+                        backgroundImage: 'none', // Oculta la imagen en pantallas pequeñas
+                    },
                 }}
             >
                 <Toolbar>
                     <IconButton
-                        color='inherit'
-                        aria-label='open drawer'
+                        color="inherit"
+                        aria-label="open drawer"
                         onClick={handleDrawerOpen}
-                        edge='start'
+                        edge="start"
                         sx={{
                             marginRight: 5,
                             ...(open && { display: 'none' }),
@@ -128,12 +131,12 @@ export const SideBar = ({ navArrayLinks }) => {
                     >
                         <MenuIcon />
                     </IconButton>
-                    <Typography variant='h5' noWrap component='div'>
+                    <Typography variant="h5" noWrap component="div">
                         Agrolink Dashboard
                     </Typography>
                     <Box sx={{ flexGrow: 1 }} />
                     <Button
-                        variant='outlined'
+                        variant="outlined"
                         sx={{
                             borderColor: theme.palette.secondary.contrastText,
                             color: theme.palette.secondary.contrastText,
@@ -150,7 +153,7 @@ export const SideBar = ({ navArrayLinks }) => {
                     </Button>
                 </Toolbar>
             </AppBar>
-            <Drawer variant='permanent' open={open}>
+            <Drawer variant="permanent" open={open}>
                 <DrawerHeader>
                     <IconButton onClick={handleDrawerClose}>
                         {theme.direction === 'rtl' ? <ChevronRightIcon /> : <ChevronLeftIcon />}
@@ -206,9 +209,9 @@ export const SideBar = ({ navArrayLinks }) => {
                     ))}
                 </List>
             </Drawer>
-            <Box component='main' sx={{ flexGrow: 1, ml: 4, mt: 3 }}>
+            <Box component="main" sx={{ flexGrow: 1, ml: 4, mt: 3 }}>
                 <DrawerHeader />
-                <DashboardArea />
+                <DashboardArea systemUserData={systemUserData} />
             </Box>
         </Box>
     );
