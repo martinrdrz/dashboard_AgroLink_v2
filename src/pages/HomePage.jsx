@@ -6,6 +6,7 @@ import { SystemData, UserSystemData } from '../components/dashboard';
 export const HomePage = ({ systemUserData }) => {
     const systemArray = [];
 
+    // en systemArray se almacena en cada componente del arreglo cada uno de los datos sistema_x
     for (let i = 1; i <= systemUserData.cant_sistemas; i++) {
         const systemKey = `sistema_${i}`;
         const system = systemUserData[systemKey];
@@ -32,9 +33,9 @@ export const HomePage = ({ systemUserData }) => {
                         telefono={systemUserData.telefono}
                         cantSistemas={systemUserData.cant_sistemas}
                     />
-                    {systemArray.forEach((element) => {
-                        <SystemData data={element} />;
-                    })}
+                    {systemArray.map((element, index) => (
+                        <SystemData key={index} system={element} />
+                    ))}
                 </>
             )}
         </>

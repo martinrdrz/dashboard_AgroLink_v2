@@ -8,3 +8,4 @@ export * from './ResponsiveFlexLayout';
 export * from './RectangularComponent';
 export * from './UserSystemData';
 export * from './SystemData';
+export * from './SubsystemData.jsx';
