@@ -3,7 +3,7 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import { CircularProgress } from '@mui/material';
 import { agrolinkApi } from '../api/agrolinkApi';
-import { SystemData, UserSystemData } from '../components/dashboard';
+import { SystemDetailedData, UserSystemData } from '../components/dashboard';
 
 export const DashboardPage = ({ systemUserData }) => {
     const [systemUserDataValues, setSystemUserDataValues] = useState({});
@@ -52,7 +52,7 @@ export const DashboardPage = ({ systemUserData }) => {
                         cantSistemas={systemUserData.cant_sistemas}
                     />
                     {systemList.map((element, index) => (
-                        <SystemData key={index} system={element} />
+                        <SystemDetailedData key={index} system={element} />
                     ))}
                 </>
             );
