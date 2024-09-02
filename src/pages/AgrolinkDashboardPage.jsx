@@ -59,7 +59,6 @@ export const AgrolinkDashboardPage = () => {
             } catch (error) {
                 setSystemUserData({
                     queryState: 'error',
-                    msg: error.response?.data?.msg || 'Ocurrió un error',
                 });
             }
         };

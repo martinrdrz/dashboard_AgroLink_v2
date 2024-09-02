@@ -16,29 +16,48 @@ export const HomePage = ({ systemUserData }) => {
         }
     }
 
+    const renderContent = () => {
+        switch (systemUserData.queryState) {
+            case 'loading':
+                return (
+                    <Box display="flex" justifyContent="center" alignItems="center" height="20rem">
+                        <CircularProgress size={80} />
+                    </Box>
+                );
+
+            case 'ready':
+                return (
+                    <>
+                        <UserSystemData
+                            nombre={systemUserData.nombre}
+                            email={systemUserData.email}
+                            telefono={systemUserData.telefono}
+                            cantSistemas={systemUserData.cant_sistemas}
+                        />
+                        {systemArray.map((element, index) => (
+                            <SystemData key={index} system={element} />
+                        ))}
+                    </>
+                );
+
+            case 'error':
+                return (
+                    <Typography variant="h6" color="error" marginBottom={2}>
+                        Error al cargar los datos. Inténtalo de nuevo más tarde.
+                    </Typography>
+                );
+
+            default:
+                return null; // Por si acaso `queryState` tiene un valor inesperado
+        }
+    };
+
     return (
         <>
             <Typography variant="h5" marginBottom={2}>
                 Inicio
             </Typography>
-            {/* <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>texto a renderizar</Box> */}
-            {systemUserData.queryState == 'loading' ? (
-                <Box display="flex" justifyContent="center" alignItems="center" height="20rem">
-                    <CircularProgress size={80} />
-                </Box>
-            ) : (
-                <>
-                    <UserSystemData
-                        nombre={systemUserData.nombre}
-                        email={systemUserData.email}
-                        telefono={systemUserData.telefono}
-                        cantSistemas={systemUserData.cant_sistemas}
-                    />
-                    {systemArray.map((element, index) => (
-                        <SystemData key={index} system={element} />
-                    ))}
-                </>
-            )}
+            {renderContent()}
         </>
     );
 };
