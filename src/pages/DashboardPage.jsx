@@ -2,19 +2,21 @@ import React, { useEffect, useState } from 'react';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import { CircularProgress } from '@mui/material';
+import { agrolinkApi } from '../api/agrolinkApi';
+import { SystemData, UserSystemData } from '../components/dashboard';
 
 export const DashboardPage = ({ systemUserData }) => {
     const [systemUserDataValues, setSystemUserDataValues] = useState({});
     const [valuesQueryState, setValuesQueryState] = useState('loading'); //loading, ready, error
 
-    const systemArray = [];
+    const systemList = [];
 
-    // en systemArray se almacena en cada componente del arreglo cada uno de los datos sistema_x
+    // en systemList se almacena en cada componente del arreglo cada uno de los datos sistema_x
     for (let i = 1; i <= systemUserData.cant_sistemas; i++) {
         const systemKey = `sistema_${i}`;
         const system = systemUserData[systemKey];
         if (system) {
-            systemArray.push(system);
+            systemList.push(system);
         }
     }
 
@@ -23,7 +25,6 @@ export const DashboardPage = ({ systemUserData }) => {
             try {
                 setValuesQueryState('loading');
                 const { data } = await agrolinkApi.get('/sistemas/getData/martinrdrz@hotmail.com?resultsCount=3');
-                console.log('READY');
                 setValuesQueryState('ready');
                 setSystemUserDataValues(data);
             } catch (error) {
@@ -35,45 +36,39 @@ export const DashboardPage = ({ systemUserData }) => {
     }, []);
 
     const renderContent = () => {
-        switch (valuesQueryState) {
-            case 'loading':
-                return (
-                    <Box display="flex" justifyContent="center" alignItems="center" height="20rem">
-                        <CircularProgress size={80} />
-                    </Box>
-                );
-
-            case 'ready':
-                return (
-                    <>
-                        <UserSystemData
-                            nombre={systemUserData.nombre}
-                            email={systemUserData.email}
-                            telefono={systemUserData.telefono}
-                            cantSistemas={systemUserData.cant_sistemas}
-                        />
-                        {systemArray.map((element, index) => (
-                            <SystemData key={index} system={element} />
-                        ))}
-                    </>
-                );
-
-            case 'error':
-                return (
-                    <Typography variant="h6" color="error" marginBottom={2}>
-                        Error al cargar los datos. Inténtalo de nuevo más tarde.
-                    </Typography>
-                );
-
-            default:
-                return null; // Por si acaso `queryState` tiene un valor inesperado
+        if (systemUserData.queryState === 'loading' || valuesQueryState == 'loading') {
+            return (
+                <Box display='flex' justifyContent='center' alignItems='center' height='20rem'>
+                    <CircularProgress size={80} />
+                </Box>
+            );
+        } else if (systemUserData.queryState === 'ready' && valuesQueryState == 'ready') {
+            return (
+                <>
+                    <UserSystemData
+                        nombre={systemUserData.nombre}
+                        email={systemUserData.email}
+                        telefono={systemUserData.telefono}
+                        cantSistemas={systemUserData.cant_sistemas}
+                    />
+                    {systemList.map((element, index) => (
+                        <SystemData key={index} system={element} />
+                    ))}
+                </>
+            );
+        } else if (systemUserData.queryState === 'error' || valuesQueryState == 'error') {
+            return (
+                <Typography variant='h6' color='error' marginBottom={2}>
+                    Error al cargar los datos. Inténtalo de nuevo más tarde.
+                </Typography>
+            );
         }
     };
 
     return (
         <>
-            {console.log(systemUserDataValues)}
-            <Typography variant="h5" marginBottom={2}>
+            {/* {console.log(systemUserDataValues)} */}
+            <Typography variant='h5' marginBottom={2}>
                 Dashboard
             </Typography>
             {renderContent()}
