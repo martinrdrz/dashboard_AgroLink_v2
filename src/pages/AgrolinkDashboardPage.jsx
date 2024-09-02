@@ -49,17 +49,17 @@ export const AgrolinkDashboardPage = () => {
         const getSystemData = async () => {
             try {
                 setSystemUserData({
-                    dataState: 'loading',
+                    queryState: 'loading',
                 });
                 const { data } = await agrolinkApi.get('/sistemas/martinrdrz@hotmail.com');
                 setSystemUserData({
-                    dataState: 'ready',
+                    queryState: 'ready',
                     ...data,
                 });
             } catch (error) {
                 setSystemUserData({
-                    dataState: 'error',
-                    msg: data.msg,
+                    queryState: 'error',
+                    msg: error.response?.data?.msg || 'Ocurrió un error',
                 });
             }
         };

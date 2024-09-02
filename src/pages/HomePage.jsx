@@ -2,6 +2,7 @@ import React from 'react';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import { SystemData, UserSystemData } from '../components/dashboard';
+import { CircularProgress } from '@mui/material';
 
 export const HomePage = ({ systemUserData }) => {
     const systemArray = [];
@@ -21,10 +22,10 @@ export const HomePage = ({ systemUserData }) => {
                 Inicio
             </Typography>
             {/* <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>texto a renderizar</Box> */}
-            {systemUserData.dataState == 'loading' ? (
-                <Typography variant="h6" marginBottom={2}>
-                    Cargando...
-                </Typography>
+            {systemUserData.queryState == 'loading' ? (
+                <Box display="flex" justifyContent="center" alignItems="center" height="20rem">
+                    <CircularProgress size={80} />
+                </Box>
             ) : (
                 <>
                     <UserSystemData
