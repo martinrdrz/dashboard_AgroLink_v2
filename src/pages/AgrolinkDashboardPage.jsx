@@ -43,32 +43,32 @@ const navArrayLinks = [
 ];
 
 export const AgrolinkDashboardPage = () => {
-    const [systemUserData, setSystemUserData] = useState({});
+    const [systemsData, setSystemsData] = useState({});
 
     useEffect(() => {
-        const getSystemData = async () => {
+        const getSystems = async () => {
             try {
-                setSystemUserData({
+                setSystemsData({
                     queryState: 'loading',
                 });
                 const { data } = await agrolinkApi.get('/sistemas/martinrdrz@hotmail.com');
-                setSystemUserData({
+                setSystemsData({
                     queryState: 'ready',
                     ...data,
                 });
             } catch (error) {
-                setSystemUserData({
+                setSystemsData({
                     queryState: 'error',
                 });
             }
         };
 
-        getSystemData();
+        getSystems();
     }, []);
 
     return (
         <>
-            <SideBar navArrayLinks={navArrayLinks} systemUserData={systemUserData} />
+            <SideBar navArrayLinks={navArrayLinks} systemsData={systemsData} />
         </>
     );
 };

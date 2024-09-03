@@ -5,16 +5,16 @@ import { CircularProgress } from '@mui/material';
 import { agrolinkApi } from '../api/agrolinkApi';
 import { SystemDetailedData, UserSystemData } from '../components/dashboard';
 
-export const DashboardPage = ({ systemUserData }) => {
-    const [systemsUserDataValues, setSystemsUserDataValues] = useState({});
+export const DashboardPage = ({ systemsData }) => {
+    const [systemsDataValues, setSystemsDataValues] = useState({});
     const [valuesQueryState, setValuesQueryState] = useState('loading'); //loading, ready, error
 
     const systemList = [];
 
     // en systemList se almacena en cada componente del arreglo cada uno de los datos sistema_x
-    for (let i = 1; i <= systemUserData.cant_sistemas; i++) {
+    for (let i = 1; i <= systemsData.cant_sistemas; i++) {
         const systemKey = `sistema_${i}`;
-        const system = systemUserData[systemKey];
+        const system = systemsData[systemKey];
         if (system) {
             systemList.push(system);
         }
@@ -26,7 +26,7 @@ export const DashboardPage = ({ systemUserData }) => {
                 setValuesQueryState('loading');
                 const { data } = await agrolinkApi.get('/sistemas/getData/martinrdrz@hotmail.com?resultsCount=3');
                 setValuesQueryState('ready');
-                setSystemsUserDataValues(data);
+                setSystemsDataValues(data);
             } catch (error) {
                 setValuesQueryState('error');
             }
@@ -36,33 +36,33 @@ export const DashboardPage = ({ systemUserData }) => {
     }, []);
 
     const renderContent = () => {
-        if (systemUserData.queryState === 'loading' || valuesQueryState == 'loading') {
+        if (systemsData.queryState === 'loading' || valuesQueryState == 'loading') {
             return (
-                <Box display="flex" justifyContent="center" alignItems="center" height="20rem">
+                <Box display='flex' justifyContent='center' alignItems='center' height='20rem'>
                     <CircularProgress size={80} />
                 </Box>
             );
-        } else if (systemUserData.queryState === 'ready' && valuesQueryState == 'ready') {
+        } else if (systemsData.queryState === 'ready' && valuesQueryState == 'ready') {
             return (
                 <>
                     <UserSystemData
-                        nombre={systemUserData.nombre}
-                        email={systemUserData.email}
-                        telefono={systemUserData.telefono}
-                        cantSistemas={systemUserData.cant_sistemas}
+                        nombre={systemsData.nombre}
+                        email={systemsData.email}
+                        telefono={systemsData.telefono}
+                        cantSistemas={systemsData.cant_sistemas}
                     />
                     {systemList.map((element, index) => (
                         <SystemDetailedData
                             key={index}
                             system={element}
-                            systemDataValues={systemsUserDataValues[`sistema_${index}`]}
+                            systemDataValues={systemsDataValues[`sistema_${index + 1}`]}
                         />
                     ))}
                 </>
             );
-        } else if (systemUserData.queryState === 'error' || valuesQueryState == 'error') {
+        } else if (systemsData.queryState === 'error' || valuesQueryState == 'error') {
             return (
-                <Typography variant="h6" color="error" marginBottom={2}>
+                <Typography variant='h6' color='error' marginBottom={2}>
                     Error al cargar los datos. Inténtalo de nuevo más tarde.
                 </Typography>
             );
@@ -72,7 +72,7 @@ export const DashboardPage = ({ systemUserData }) => {
     return (
         <>
             {/* {console.log(systemUserDataValues)} */}
-            <Typography variant="h5" marginBottom={2}>
+            <Typography variant='h5' marginBottom={2}>
                 Dashboard
             </Typography>
             {renderContent()}
@@ -80,7 +80,7 @@ export const DashboardPage = ({ systemUserData }) => {
     );
 };
 
-//el valor de "systemsUserDataValues" es:
+//el valor de "systemsDataValues" es:
 // {
 //   sistema_1: {
 //     dato_1: [ '21', '26', '50' ],
