@@ -11,3 +11,4 @@ export * from './SystemData';
 export * from './SubsystemData';
 export * from './SystemDetailedData';
 export * from './SubsystemDetailedData.jsx';
+export * from './DetailedData.jsx';

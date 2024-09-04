@@ -15,10 +15,10 @@ export const SystemDetailedData = ({ system, systemDataValues }) => {
 
     return (
         <>
-            <Typography variant='h6' marginTop={5}>
+            <Typography variant="h6" marginTop={5} color="secondary">
                 Sistema: {system.titulo} - ({system.subtitulo})
             </Typography>
-            <Typography variant='h6' marginBottom={1}>
+            <Typography variant="h6" marginBottom={1}>
                 Tipo: {system.tipo}
             </Typography>
             {subsystemList.map((element, index) => (
