@@ -87,7 +87,7 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
     }),
 }));
 
-export const SideBar = ({ navArrayLinks, systemsData, addValuesToSystemsData }) => {
+export const SideBar = ({ navArrayLinks }) => {
     const theme = useTheme();
     const [open, setOpen] = React.useState(false);
     const { startLogout } = useAuthStore();
@@ -211,7 +211,7 @@ export const SideBar = ({ navArrayLinks, systemsData, addValuesToSystemsData }) 
             </Drawer>
             <Box component='main' sx={{ flexGrow: 1, ml: 4, mt: 3 }}>
                 <DrawerHeader />
-                <DashboardArea systemsData={systemsData} />
+                <DashboardArea />
             </Box>
         </Box>
     );

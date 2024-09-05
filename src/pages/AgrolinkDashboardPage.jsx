@@ -8,6 +8,7 @@ import { SideBar } from '../components/navbar/SideBar';
 import { agrolinkApi } from '../api/agrolinkApi';
 import { useEffect } from 'react';
 import { useState } from 'react';
+import { userDataStore } from '../hooks';
 
 const navArrayLinks = [
     {
@@ -43,23 +44,17 @@ const navArrayLinks = [
 ];
 
 export const AgrolinkDashboardPage = () => {
-    const [systemsData, setSystemsData] = useState({});
+    const { setReadyState, setLoadingState, setErrorState, setAllData } = userDataStore();
 
     useEffect(() => {
         const getSystems = async () => {
             try {
-                setSystemsData({
-                    queryState: 'loading',
-                });
+                setLoadingState();
                 const { data } = await agrolinkApi.get('/sistemas/martinrdrz@hotmail.com');
-                setSystemsData({
-                    queryState: 'ready',
-                    ...data,
-                });
+                setReadyState();
+                setAllData(data);
             } catch (error) {
-                setSystemsData({
-                    queryState: 'error',
-                });
+                setErrorState();
             }
         };
 
@@ -68,7 +63,7 @@ export const AgrolinkDashboardPage = () => {
 
     return (
         <>
-            <SideBar navArrayLinks={navArrayLinks} systemsData={systemsData} />
+            <SideBar navArrayLinks={navArrayLinks} />
         </>
     );
 };

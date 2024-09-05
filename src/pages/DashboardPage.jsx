@@ -4,56 +4,44 @@ import Typography from '@mui/material/Typography';
 import { CircularProgress } from '@mui/material';
 import { agrolinkApi } from '../api/agrolinkApi';
 import { SystemDetailedData, UserSystemData } from '../components/dashboard';
+import { useSelector } from 'react-redux';
+import { userDataStore } from '../hooks';
 
-export const DashboardPage = ({ systemsData }) => {
-    const [systemsDataValues, setSystemsDataValues] = useState({});
-    const [valuesQueryState, setValuesQueryState] = useState('first_load'); //loading, ready, error
+export const DashboardPage = () => {
     const dataValuesCount = Number(import.meta.env.VITE_DATA_VALUES_COUNT);
-
+    const { email } = useSelector((state) => state.auth);
+    const [valuesQueryState, setValuesQueryState] = useState('first_load'); //state para control carga inicial de valoresde los datos
     const systemList = [];
-
-    // en systemList se almacena en cada componente del arreglo cada uno de los datos sistema_x
-    for (let i = 1; i <= systemsData.cant_sistemas; i++) {
-        const systemKey = `sistema_${i}`;
-        const system = systemsData[systemKey];
-        if (system) {
-            systemList.push(system);
-        }
-    }
+    const { status: systemsDataState, setValues } = userDataStore(); // state es para control carga inicial
 
     useEffect(() => {
         const getSystemDataValues = async () => {
             try {
-                //valuesQueryState !== 'first_time' ? setValuesQueryState('loading') : null;
-                const { data } = await agrolinkApi.get(
-                    `/sistemas/getData/martinrdrz@hotmail.com?resultsCount=${dataValuesCount}`
-                );
+                const { data } = await agrolinkApi.get(`/sistemas/getData/${email}?resultsCount=${dataValuesCount}`);
+                setValues(data);
                 setValuesQueryState('ready');
-                setSystemsDataValues(data);
+                //setSystemsDataValues(data);
             } catch (error) {
                 setValuesQueryState('error');
             }
         };
 
         getSystemDataValues();
-        // Configurar el intervalo para llamar a la API cada 10 segundos
         const intervalId = setInterval(getSystemDataValues, 120000); // 10000 milisegundos = 10 segundos
-
-        // Limpiar el intervalo cuando el componente se desmonte
         return () => clearInterval(intervalId);
     }, []);
 
     const renderContent = () => {
-        if (systemsData.queryState === 'loading' || valuesQueryState == 'first_load') {
+        if (systemsDataState === 'loading' || valuesQueryState == 'first_load') {
             return (
                 <Box display='flex' justifyContent='center' alignItems='center' height='20rem'>
                     <CircularProgress size={80} />
                 </Box>
             );
-        } else if (systemsData.queryState === 'ready' && valuesQueryState == 'ready') {
+        } else if (systemsDataState === 'ready' && valuesQueryState == 'ready') {
             return (
                 <>
-                    <UserSystemData
+                    {/* <UserSystemData
                         nombre={systemsData.nombre}
                         email={systemsData.email}
                         telefono={systemsData.telefono}
@@ -65,10 +53,10 @@ export const DashboardPage = ({ systemsData }) => {
                             system={element}
                             systemDataValues={systemsDataValues[`sistema_${index + 1}`]}
                         />
-                    ))}
+                    ))} */}
                 </>
             );
-        } else if (systemsData.queryState === 'error' || valuesQueryState == 'error') {
+        } else if (systemsDataState === 'error' || valuesQueryState == 'error') {
             return (
                 <Typography variant='h6' color='error' marginBottom={2}>
                     Error al cargar los datos. Inténtalo de nuevo más tarde.

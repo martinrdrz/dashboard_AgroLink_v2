@@ -7,7 +7,7 @@ export const DashboardArea = ({ systemsData }) => {
             <Routes>
                 <Route path='/' element={<HomePage systemsData={systemsData} />} />
                 <Route path='/home' element={<Navigate to='/' />} />
-                <Route path='/dashboard' element={<DashboardPage systemsData={systemsData} />} />
+                <Route path='/dashboard' element={<DashboardPage />} />
                 <Route path='/widgets' element={<WidgetPage />} />
                 <Route path='/products' element={<ProductPage />} />
                 <Route path='/settings' element={<SettingsPage />} />

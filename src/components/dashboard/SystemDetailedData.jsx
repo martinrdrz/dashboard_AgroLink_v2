@@ -4,7 +4,7 @@ import { SubsystemDetailedData } from './SubsystemDetailedData';
 export const SystemDetailedData = ({ system, systemDataValues }) => {
     const subsystemList = [];
 
-    // en subsystemArray se almacena en cada componente del arreglo cada uno de los datos sistema_x
+    // en subsystemList se almacena en cada componente del arreglo cada uno de los datos sistema_x
     for (let i = 1; i <= system.cant_subsistemas; i++) {
         const subsystemKey = `subsistema_${i}`;
         const subsystem = system[subsystemKey];
@@ -15,10 +15,10 @@ export const SystemDetailedData = ({ system, systemDataValues }) => {
 
     return (
         <>
-            <Typography variant="h6" marginTop={5} color="secondary">
+            <Typography variant='h6' marginTop={5} color='secondary'>
                 Sistema: {system.titulo} - ({system.subtitulo})
             </Typography>
-            <Typography variant="h6" marginBottom={1}>
+            <Typography variant='h6' marginBottom={1}>
                 Tipo: {system.tipo}
             </Typography>
             {subsystemList.map((element, index) => (
@@ -33,7 +33,7 @@ export const SystemDetailedData = ({ system, systemDataValues }) => {
     );
 };
 
-//El valor de "system" es:
+// El valor de "system" es:
 //   {
 //     "canal_1": "1687674",
 //     "cant_canales_asignados": 1,
