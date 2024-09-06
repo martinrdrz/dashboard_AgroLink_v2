@@ -2,7 +2,7 @@ import { Typography } from '@mui/material';
 import { userDataStore } from '../../hooks';
 
 export const SubsystemData = ({ sysName, subsysName }) => {
-    const { getSubsystemData } = userDataStore(); // state es para control carga inicial
+    const { getSubsystemData } = userDataStore();
     const { titulo, tipo } = getSubsystemData(sysName, subsysName);
 
     return (

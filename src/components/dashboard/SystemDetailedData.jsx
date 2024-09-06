@@ -1,34 +1,23 @@
 import { Typography } from '@mui/material';
 import { SubsystemDetailedData } from './SubsystemDetailedData';
+import { userDataStore } from '../../hooks';
 
-export const SystemDetailedData = ({ system, systemDataValues }) => {
-    const subsystemList = [];
-
-    // en subsystemList se almacena en cada componente del arreglo cada uno de los datos sistema_x
-    for (let i = 1; i <= system.cant_subsistemas; i++) {
-        const subsystemKey = `subsistema_${i}`;
-        const subsystem = system[subsystemKey];
-        if (subsystem) {
-            subsystemList.push(subsystem);
-        }
-    }
+export const SystemDetailedData = ({ sysName }) => {
+    const { getSystemData, getSubsystems } = userDataStore();
+    const { titulo, subtitulo, tipo } = getSystemData(sysName);
+    const subsystemList = getSubsystems(sysName);
 
     return (
         <>
-            <Typography variant='h6' marginTop={5} color='secondary'>
-                Sistema: {system.titulo} - ({system.subtitulo})
+            <Typography variant="h6" marginTop={5} color="secondary">
+                Sistema: {titulo} - ({subtitulo})
             </Typography>
-            <Typography variant='h6' marginBottom={1}>
-                Tipo: {system.tipo}
+            <Typography variant="h6" marginBottom={1}>
+                Tipo: {tipo}
             </Typography>
-            {subsystemList.map((element, index) => (
-                <SubsystemDetailedData
-                    key={index}
-                    subsystem={element}
-                    systemData={system}
-                    systemDataValues={systemDataValues}
-                />
-            ))}
+            {/* {subsystemList.map((subsysName, index) => (
+                <SubsystemDetailedData key={index} sysName={sysName} subsysName={subsysName} />
+            ))} */}
         </>
     );
 };

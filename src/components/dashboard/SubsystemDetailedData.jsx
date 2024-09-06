@@ -2,10 +2,12 @@ import { Typography } from '@mui/material';
 import { DetailedData } from './DetailedData';
 import { red } from '@mui/material/colors';
 
-export const SubsystemDetailedData = ({ subsystem, systemData, systemDataValues }) => {
-    const dataList = [];
+export const SubsystemDetailedData = ({ sysName, subsysName }) => {
+    const { getSubsystemData } = userDataStore();
+    const { titulo, tipo, dato_inicial, dato_final, datos: dataList } = getSubsystemData(sysName, subsysName);
 
     // en dataList se almacena en cada componente de la lista el objeto correspondiente a "dato_x" y se agrega la propiedad "values" con la lista de valores para dicho "dato_x".
+    //todo: verificar y eleiminar
     for (let i = subsystem.dato_inicial; i <= subsystem.dato_final; i++) {
         const dataKey = `dato_${i}`;
         const data = systemData[dataKey];
@@ -18,16 +20,16 @@ export const SubsystemDetailedData = ({ subsystem, systemData, systemDataValues 
     return (
         <>
             <Typography variant="h6" marginBottom={0} color="secondary">
-                Subsistema: {subsystem.nombre}
+                Subsistema: {titulo}
             </Typography>
             <Typography variant="h6" marginBottom={0}>
-                Tipo: {subsystem.tipo}
+                Tipo: {tipo}
             </Typography>
             <Typography variant="h6" marginBottom={2}>
-                dato_inicial: {subsystem.dato_inicial}&nbsp;&nbsp;&nbsp; dato_final: {subsystem.dato_final}
+                dato_inicial: {dato_inicial}&nbsp;&nbsp;&nbsp; dato_final: {dato_final}
             </Typography>
             {dataList.map((data, index) => (
-                <DetailedData key={index} data={data} />
+                <DetailedData key={index} sysName={sysName} subsysName={subsysName} />
             ))}
         </>
     );

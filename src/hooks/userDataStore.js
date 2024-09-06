@@ -56,14 +56,23 @@ export const userDataStore = () => {
         if (!subsystemData) {
             return '';
         }
-        return { titulo: subsystemData.titulo, tipo: subsystemData.tipo };
+        const datosList = [];
+        for (let i = subsystemData.dato_inicial; i <= subsystemData.dato_final; i++) {
+            datosList.push('dato_${i}');
+        }
+        return {
+            titulo: subsystemData.titulo,
+            tipo: subsystemData.tipo,
+            dato_inicial: subsystemData.dato_inicial,
+            dato_final: subsystemData.dato_final,
+            datos: datosList,
+        };
     };
 
-    const getData = (sysIndex, subsysIndex) => {
-        const { dato_inicial, dato_final } = useSelector(
-            (state) => state.userData.data[`sistema_${sysIndex}`][`subsistema_${subsysIndex}`]
-        );
-        const systemData = useSelector((state) => state.userData.data[`sistema_${sysIndex}`]);
+    const getData = (sysName, subsysName) => {
+        const dato_inicial = useSelector((state) => state.userData.data[sysName][subsysName].dato_inicial);
+        const dato_final = useSelector((state) => state.userData.data[sysName][subsysName].dato_final);
+        const systemData = useSelector((state) => state.userData.data[sysName]);
         const dataList = [];
 
         // en dataList se almacena en cada componente de la lista el objeto correspondiente a "dato_x" que ya tiene incluida la propiedad "values" con la lista de valores para dicho "dato_x".

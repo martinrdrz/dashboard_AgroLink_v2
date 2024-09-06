@@ -9,10 +9,12 @@ import { userDataStore } from '../hooks';
 
 export const DashboardPage = () => {
     const dataValuesCount = Number(import.meta.env.VITE_DATA_VALUES_COUNT);
+    const dataValuesUpdate = Number(import.meta.env.VITE_DATA_VALUES_UPDATE);
     const { email } = useSelector((state) => state.auth);
     const [valuesQueryState, setValuesQueryState] = useState('first_load'); //state para control carga inicial de valoresde los datos
     const systemList = [];
-    const { status: systemsDataState, setValues } = userDataStore(); // state es para control carga inicial
+    const { status: systemsDataState, setValues, getSystems } = userDataStore(); // state es para control carga inicial
+    const systemsList = getSystems();
 
     useEffect(() => {
         const getSystemDataValues = async () => {
@@ -27,27 +29,25 @@ export const DashboardPage = () => {
         };
 
         getSystemDataValues();
-        const intervalId = setInterval(getSystemDataValues, 120000); // 10000 milisegundos = 10 segundos
+        const intervalId = setInterval(getSystemDataValues, dataValuesUpdate); // 10000 milisegundos = 10 segundos
         return () => clearInterval(intervalId);
     }, []);
 
     const renderContent = () => {
         if (systemsDataState === 'loading' || valuesQueryState == 'first_load') {
             return (
-                <Box display='flex' justifyContent='center' alignItems='center' height='20rem'>
+                <Box display="flex" justifyContent="center" alignItems="center" height="20rem">
                     <CircularProgress size={80} />
                 </Box>
             );
         } else if (systemsDataState === 'ready' && valuesQueryState == 'ready') {
             return (
                 <>
-                    {/* <UserSystemData
-                        nombre={systemsData.nombre}
-                        email={systemsData.email}
-                        telefono={systemsData.telefono}
-                        cantSistemas={systemsData.cant_sistemas}
-                    />
-                    {systemList.map((element, index) => (
+                    <UserSystemData />
+                    {systemsList && systemsList.length > 0
+                        ? systemsList.map((sysName, index) => <SystemDetailedData key={index} sysName={sysName} />)
+                        : null}
+                    {/* {systemList.map((element, index) => (
                         <SystemDetailedData
                             key={index}
                             system={element}
@@ -58,7 +58,7 @@ export const DashboardPage = () => {
             );
         } else if (systemsDataState === 'error' || valuesQueryState == 'error') {
             return (
-                <Typography variant='h6' color='error' marginBottom={2}>
+                <Typography variant="h6" color="error" marginBottom={2}>
                     Error al cargar los datos. Inténtalo de nuevo más tarde.
                 </Typography>
             );
@@ -68,7 +68,7 @@ export const DashboardPage = () => {
     return (
         <>
             {/* {console.log(systemUserDataValues)} */}
-            <Typography variant='h5' marginBottom={2}>
+            <Typography variant="h5" marginBottom={2}>
                 Dashboard
             </Typography>
             {renderContent()}
