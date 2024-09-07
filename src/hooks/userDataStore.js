@@ -1,15 +1,10 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { agrolinkApi } from '../api/agrolinkApi';
-import { doSetReadyState, doSetLoadingState, doSetErrorState, doSetAllData } from '../store';
+import { doSetReadyState, doSetLoadingState, doSetErrorState, doSetAllData, doSetValues } from '../store';
 
 export const userDataStore = () => {
-    //const { status, uid, name, email, photoURL, errorMessage } = useSelector((state) => state.auth);
     const { status } = useSelector((state) => state.userData);
     const dispatch = useDispatch();
-
-    // const getUserDataState = () => {
-    //     return useSelector((state) => state.userData.status);
-    // };
 
     const getUserData = () => {
         const nombre = useSelector((state) => state.userData.data?.nombre);
@@ -30,7 +25,6 @@ export const userDataStore = () => {
     };
 
     const getSystemData = (sysName) => {
-        //const systemData = useSelector((state) => state.userData.data[sysName]);
         const titulo = useSelector((state) => state.userData.data[sysName]?.titulo);
         const subtitulo = useSelector((state) => state.userData.data[sysName]?.subtitulo);
         const tipo = useSelector((state) => state.userData.data[sysName]?.tipo);
@@ -56,7 +50,7 @@ export const userDataStore = () => {
         }
         const datosList = [];
         for (let i = subsystemData.dato_inicial; i <= subsystemData.dato_final; i++) {
-            datosList.push('dato_${i}');
+            datosList.push(`dato_${i}`);
         }
         return {
             titulo: subsystemData.titulo,
@@ -76,9 +70,8 @@ export const userDataStore = () => {
         dispatch(doSetAllData(systemsData));
     };
 
-    const setValues = () => {
-        //todo
-        console.log('----- Entre en setValues -------');
+    const setValues = (dataValues) => {
+        dispatch(doSetValues(dataValues));
     };
 
     const setReadyState = () => {
@@ -112,35 +105,18 @@ export const userDataStore = () => {
     };
 };
 
-// const getSystems = () => {
-//     //todo
-//     const systemsData = useSelector((state) => state.userData.data);
-//     const systemList = [];
-//     // en systemList se almacena en cada componente del arreglo cada uno de los datos sistema_x
-//     if (systemsData) {
-//         for (let i = 1; i <= systemsData.cant_sistemas; i++) {
-//             const systemKey = `sistema_${i}`;
-//             const system = systemsData[systemKey];
-//             if (system) {
-//                 systemList.push(system);
-//             }
-//         }
-//     }
-//     return systemList;
-// };
-
-// const getSubsystems = (sysIndex) => {
-//     //todo
-//     const systemData = useSelector((state) => state.userData.data[`sistema_${sysIndex}`]);
-//     const subsystemList = [];
-
-//     // en subsystemList se almacena en cada componente del arreglo cada uno de los datos sistema_x
-//     for (let i = 1; i <= systemData.cant_subsistemas; i++) {
-//         const subsystemKey = `subsistema_${i}`;
-//         const subsystem = systemData[subsystemKey];
-//         if (subsystem) {
-//             subsystemList.push(subsystem);
-//         }
-//     }
-//     return subsystemList;
-// };
+//el parametro "dataValues" de la funcion setValues tiene el formatos:
+// {
+//   sistema_1: {
+//     dato_1: [ '21', '26', '50' ],
+//     dato_2: [ '-16', '-15', '60' ],
+//     dato_3: [ '-30', '-56', '70' ],
+//     dato_4: [ '6', '-4', '80' ]
+//     ...
+//   },
+//   sistema_2: {
+//     dato_1: [ '-11', '-11', '-22' ],
+//     dato_2: [ '0', '0', '4' ]
+//    ...
+//  }
+// }

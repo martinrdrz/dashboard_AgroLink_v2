@@ -4,6 +4,13 @@ import { userDataStore } from '../../hooks';
 export const DetailedData = ({ sysName, dataName }) => {
     const { getData } = userDataStore();
     const { titulo, tipo, unidad, estado_alerta, descripcion_alerta, valores } = getData(sysName, dataName);
+    // console.log(`--- ${titulo} ---`);
+    // console.log(`--- ${tipo} ---`);
+    // console.log(`--- ${unidad} ---`);
+    // console.log(`--- ${estado_alerta} ---`);
+    // console.log(`--- ${descripcion_alerta} ---`);
+    // console.log(`--- ${valores} ---`);
+
     return (
         <>
             <Typography variant='h6' marginBottom={0}>
