@@ -9,15 +9,15 @@ export const SystemDetailedData = ({ sysName }) => {
 
     return (
         <>
-            <Typography variant="h6" marginTop={5} color="secondary">
+            <Typography variant='h6' marginTop={5} color='secondary'>
                 Sistema: {titulo} - ({subtitulo})
             </Typography>
-            <Typography variant="h6" marginBottom={1}>
+            <Typography variant='h6' marginBottom={1}>
                 Tipo: {tipo}
             </Typography>
-            {/* {subsystemList.map((subsysName, index) => (
+            {subsystemList.map((subsysName, index) => (
                 <SubsystemDetailedData key={index} sysName={sysName} subsysName={subsysName} />
-            ))} */}
+            ))}
         </>
     );
 };

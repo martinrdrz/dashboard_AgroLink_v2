@@ -20,24 +20,21 @@ export const userDataStore = () => {
     };
 
     const getSystems = () => {
-        const systemsData = useSelector((state) => state.userData.data);
+        const systemsCount = useSelector((state) => state.userData.data?.cant_sistemas);
         const systemList = [];
-        // en systemList se almacena en cada componente del arreglo cada uno de los datos sistema_x
-        if (systemsData) {
-            for (let i = 1; i <= systemsData.cant_sistemas; i++) {
-                const systemKey = `sistema_${i}`;
-                systemList.push(systemKey);
-            }
+        for (let i = 1; i <= systemsCount; i++) {
+            const systemKey = `sistema_${i}`;
+            systemList.push(systemKey);
         }
         return systemList;
     };
 
     const getSystemData = (sysName) => {
-        const systemData = useSelector((state) => state.userData.data[sysName]);
-        if (!systemData) {
-            return '';
-        }
-        return { titulo: systemData.titulo, subtitulo: systemData.subtitulo, tipo: systemData.tipo };
+        //const systemData = useSelector((state) => state.userData.data[sysName]);
+        const titulo = useSelector((state) => state.userData.data[sysName]?.titulo);
+        const subtitulo = useSelector((state) => state.userData.data[sysName]?.subtitulo);
+        const tipo = useSelector((state) => state.userData.data[sysName]?.tipo);
+        return { titulo, subtitulo, tipo };
     };
 
     const getSubsystems = (sysName) => {
@@ -52,6 +49,7 @@ export const userDataStore = () => {
 
     const getSubsystemData = (sysName, subsysName) => {
         const subsystemData = useSelector((state) => state.userData.data[sysName][subsysName]);
+
         //console.log(subsystemData);
         if (!subsystemData) {
             return '';
@@ -69,25 +67,12 @@ export const userDataStore = () => {
         };
     };
 
-    const getData = (sysName, subsysName) => {
-        const dato_inicial = useSelector((state) => state.userData.data[sysName][subsysName].dato_inicial);
-        const dato_final = useSelector((state) => state.userData.data[sysName][subsysName].dato_final);
-        const systemData = useSelector((state) => state.userData.data[sysName]);
-        const dataList = [];
-
-        // en dataList se almacena en cada componente de la lista el objeto correspondiente a "dato_x" que ya tiene incluida la propiedad "values" con la lista de valores para dicho "dato_x".
-        for (let i = dato_inicial; i <= dato_final; i++) {
-            const dataKey = `dato_${i}`;
-            const data = systemData[dataKey];
-            if (data) {
-                dataList.push(data);
-            }
-        }
-        return dataList;
+    const getData = (sysName, dataName) => {
+        const data = useSelector((state) => state.userData.data[sysName][dataName]);
+        return data;
     };
 
     const setAllData = (systemsData) => {
-        //todo
         dispatch(doSetAllData(systemsData));
     };
 

@@ -36,7 +36,7 @@ export const DashboardPage = () => {
     const renderContent = () => {
         if (systemsDataState === 'loading' || valuesQueryState == 'first_load') {
             return (
-                <Box display="flex" justifyContent="center" alignItems="center" height="20rem">
+                <Box display='flex' justifyContent='center' alignItems='center' height='20rem'>
                     <CircularProgress size={80} />
                 </Box>
             );
@@ -47,18 +47,11 @@ export const DashboardPage = () => {
                     {systemsList && systemsList.length > 0
                         ? systemsList.map((sysName, index) => <SystemDetailedData key={index} sysName={sysName} />)
                         : null}
-                    {/* {systemList.map((element, index) => (
-                        <SystemDetailedData
-                            key={index}
-                            system={element}
-                            systemDataValues={systemsDataValues[`sistema_${index + 1}`]}
-                        />
-                    ))} */}
                 </>
             );
         } else if (systemsDataState === 'error' || valuesQueryState == 'error') {
             return (
-                <Typography variant="h6" color="error" marginBottom={2}>
+                <Typography variant='h6' color='error' marginBottom={2}>
                     Error al cargar los datos. Inténtalo de nuevo más tarde.
                 </Typography>
             );
@@ -68,7 +61,7 @@ export const DashboardPage = () => {
     return (
         <>
             {/* {console.log(systemUserDataValues)} */}
-            <Typography variant="h5" marginBottom={2}>
+            <Typography variant='h5' marginBottom={2}>
                 Dashboard
             </Typography>
             {renderContent()}

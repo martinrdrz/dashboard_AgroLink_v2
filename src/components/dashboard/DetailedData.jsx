@@ -1,26 +1,29 @@
 import { Box, Typography } from '@mui/material';
+import { userDataStore } from '../../hooks';
 
-export const DetailedData = ({ data }) => {
+export const DetailedData = ({ sysName, dataName }) => {
+    const { getData } = userDataStore();
+    const { titulo, tipo, unidad, estado_alerta, descripcion_alerta, valores } = getData(sysName, dataName);
     return (
         <>
             <Typography variant='h6' marginBottom={0}>
-                Dato titulo: {data.titulo}
+                Dato titulo: {titulo}
             </Typography>
             <Typography variant='h6' marginBottom={0}>
-                Dato tipo: {data.tipo}
+                Dato tipo: {tipo}
             </Typography>
             <Typography variant='h6' marginBottom={0}>
-                Dato Unidad: {data.unidad}
+                Dato Unidad: {unidad}
             </Typography>
             <Typography variant='h6' marginBottom={0}>
-                Dato alerta estado: {data.estado_alerta}
+                Dato alerta estado: {estado_alerta}
             </Typography>
             <Typography variant='h6' marginBottom={0}>
-                Dato descripcion alerta: {data.descripcion_alerta}
+                Dato descripcion alerta: {descripcion_alerta}
             </Typography>
             {/* Iteramos sobre data.valores para mostrar cada valor */}
             <Box display='flex' flexDirection='row' marginBottom={2}>
-                {data.valores.map((valor, index) => (
+                {valores.map((valor, index) => (
                     <Typography key={index} variant='body1' marginRight={2}>
                         {valor}
                     </Typography>
