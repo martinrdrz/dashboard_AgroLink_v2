@@ -25,9 +25,6 @@ export const HomePage = () => {
                         {systemsList && systemsList.length > 0
                             ? systemsList.map((sysName, index) => <SystemData key={index} sysName={sysName} />)
                             : null}
-                        {/* {systemsList &&
-                            systemsList.length > 0 &&
-                            systemsList.map((sysName, index) => <SystemData key={index} sysName={sysName} />)} */}
                     </>
                 );
 

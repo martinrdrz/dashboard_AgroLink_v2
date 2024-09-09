@@ -13,25 +13,25 @@ export const DetailedData = ({ sysName, dataName }) => {
 
     return (
         <>
-            <Typography variant='h6' marginBottom={0}>
+            <Typography variant="h6" marginBottom={0}>
                 Dato titulo: {titulo}
             </Typography>
-            <Typography variant='h6' marginBottom={0}>
+            <Typography variant="h6" marginBottom={0}>
                 Dato tipo: {tipo}
             </Typography>
-            <Typography variant='h6' marginBottom={0}>
+            <Typography variant="h6" marginBottom={0}>
                 Dato Unidad: {unidad}
             </Typography>
-            <Typography variant='h6' marginBottom={0}>
+            <Typography variant="h6" marginBottom={0}>
                 Dato alerta estado: {estado_alerta}
             </Typography>
-            <Typography variant='h6' marginBottom={0}>
+            <Typography variant="h6" marginBottom={0}>
                 Dato descripcion alerta: {descripcion_alerta}
             </Typography>
             {/* Iteramos sobre data.valores para mostrar cada valor */}
-            <Box display='flex' flexDirection='row' marginBottom={2}>
+            <Box display="flex" flexDirection="row" marginBottom={2}>
                 {valores.map((valor, index) => (
-                    <Typography key={index} variant='body1' marginRight={2}>
+                    <Typography key={index} variant="body1" marginRight={2}>
                         {valor}
                     </Typography>
                 ))}

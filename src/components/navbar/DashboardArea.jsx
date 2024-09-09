@@ -1,7 +1,7 @@
 import { Navigate, Route, Routes } from 'react-router-dom';
 import { HomePage, DashboardPage, WidgetPage, ProductPage, SettingsPage } from '../../pages';
 
-export const DashboardArea = ({ systemsData }) => {
+export const DashboardArea = () => {
     return (
         <>
             <Routes>

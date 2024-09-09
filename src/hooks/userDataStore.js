@@ -1,21 +1,23 @@
 import { useDispatch, useSelector } from 'react-redux';
-import { agrolinkApi } from '../api/agrolinkApi';
 import { doSetReadyState, doSetLoadingState, doSetErrorState, doSetAllData, doSetValues } from '../store';
 
 export const userDataStore = () => {
     const { status } = useSelector((state) => state.userData);
+    const systemsData = useSelector((state) => state.userData.data);
+    const systemsDataValues = useSelector((state) => state.userData.values);
     const dispatch = useDispatch();
 
     const getUserData = () => {
-        const nombre = useSelector((state) => state.userData.data?.nombre);
-        const email = useSelector((state) => state.userData.data?.email);
-        const telefono = useSelector((state) => state.userData.data?.telefono);
-        const cant_sistemas = useSelector((state) => state.userData.data?.cant_sistemas);
-        return { nombre, email, telefono, cant_sistemas };
+        return {
+            nombre: systemsData?.nombre,
+            email: systemsData?.email,
+            telefono: systemsData?.telefono,
+            cant_sistemas: systemsData?.cant_sistemas,
+        };
     };
 
     const getSystems = () => {
-        const systemsCount = useSelector((state) => state.userData.data?.cant_sistemas);
+        const systemsCount = systemsData?.cant_sistemas;
         const systemList = [];
         for (let i = 1; i <= systemsCount; i++) {
             const systemKey = `sistema_${i}`;
@@ -25,14 +27,14 @@ export const userDataStore = () => {
     };
 
     const getSystemData = (sysName) => {
-        const titulo = useSelector((state) => state.userData.data[sysName]?.titulo);
-        const subtitulo = useSelector((state) => state.userData.data[sysName]?.subtitulo);
-        const tipo = useSelector((state) => state.userData.data[sysName]?.tipo);
+        const titulo = systemsData[sysName]?.titulo;
+        const subtitulo = systemsData[sysName]?.subtitulo;
+        const tipo = systemsData[sysName]?.tipo;
         return { titulo, subtitulo, tipo };
     };
 
     const getSubsystems = (sysName) => {
-        const subsystemsCount = useSelector((state) => state.userData.data[sysName].cant_subsistemas);
+        const subsystemsCount = systemsData?.[sysName].cant_subsistemas;
         const subsystemList = [];
         for (let i = 1; i <= subsystemsCount; i++) {
             const subsystemKey = `subsistema_${i}`;
@@ -42,9 +44,7 @@ export const userDataStore = () => {
     };
 
     const getSubsystemData = (sysName, subsysName) => {
-        const subsystemData = useSelector((state) => state.userData.data[sysName][subsysName]);
-
-        //console.log(subsystemData);
+        const subsystemData = systemsData?.[sysName][subsysName];
         if (!subsystemData) {
             return '';
         }
@@ -62,8 +62,9 @@ export const userDataStore = () => {
     };
 
     const getData = (sysName, dataName) => {
-        const data = useSelector((state) => state.userData.data[sysName][dataName]);
-        return data;
+        const data = systemsData?.[sysName][dataName];
+        const dataWithValues = { ...data, valores: systemsDataValues?.[sysName][dataName] };
+        return dataWithValues;
     };
 
     const setAllData = (systemsData) => {
