@@ -13,7 +13,7 @@ export const HomePage = () => {
         switch (systemsDataState) {
             case 'loading':
                 return (
-                    <Box display="flex" justifyContent="center" alignItems="center" height="20rem">
+                    <Box display='flex' justifyContent='center' alignItems='center' height='20rem'>
                         <CircularProgress size={80} />
                     </Box>
                 );
@@ -30,7 +30,7 @@ export const HomePage = () => {
 
             case 'error':
                 return (
-                    <Typography variant="h6" color="error" marginBottom={2}>
+                    <Typography variant='h6' color='error' marginBottom={2}>
                         Error al cargar los datos. Inténtalo de nuevo más tarde.
                     </Typography>
                 );
@@ -42,7 +42,7 @@ export const HomePage = () => {
 
     return (
         <>
-            <Typography variant="h5" marginBottom={2}>
+            <Typography variant='h5' marginBottom={2}>
                 Inicio
             </Typography>
             {renderContent()}

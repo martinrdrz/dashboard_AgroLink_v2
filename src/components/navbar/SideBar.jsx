@@ -209,9 +209,12 @@ export const SideBar = ({ navArrayLinks }) => {
                     ))}
                 </List>
             </Drawer>
-            <Box component='main' sx={{ flexGrow: 1, ml: 4, mt: 3 }}>
-                <DrawerHeader />
-                <DashboardArea />
+            <Box component='main' sx={{ backgroundColor: '#eef2f6', flexGrow: 1, ml: 0, mt: 0 }}>
+                <Box component='main' sx={{ flexGrow: 1, ml: 4, mt: 3 }}>
+                    {/*<Box component='main' sx={{ backgroundColor: '#f5f5f5', flexGrow: 1, ml: 0, mt: 0 }}> */}
+                    <DrawerHeader />
+                    <DashboardArea />
+                </Box>
             </Box>
         </Box>
     );
