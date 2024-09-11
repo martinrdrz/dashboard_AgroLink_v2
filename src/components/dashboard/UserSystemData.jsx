@@ -1,9 +1,6 @@
-import { Avatar, Box, Card, CardContent, Grid, IconButton, Stack, Typography } from '@mui/material';
+import { Box, Typography } from '@mui/material';
 import React from 'react';
 import { userDataStore } from '../../hooks';
-import AccountCircleIcon from '@mui/icons-material/AccountCircle';
-import MailOutlineIcon from '@mui/icons-material/MailOutline';
-import SettingsSuggestIcon from '@mui/icons-material/SettingsSuggest';
 import PersonIcon from '@mui/icons-material/Person';
 import EmailIcon from '@mui/icons-material/Email';
 import PhoneIcon from '@mui/icons-material/Phone';
@@ -36,23 +33,23 @@ export const UserSystemData = () => {
                         gap: 1,
                     }}
                 >
-                    <Typography variant='h6' component='div' fontWeight='bold' mt={1}>
+                    <Typography variant="h6" component="div" fontWeight="bold" mt={1}>
                         {nombre}
                     </Typography>
 
                     <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
                         <EmailIcon sx={{ color: 'green' }} />
-                        <Typography variant='body2'>{email}</Typography>
+                        <Typography variant="body2">{email}</Typography>
                     </Box>
 
                     <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
                         <PhoneIcon sx={{ color: 'red' }} />
-                        <Typography variant='body2'>{telefono}</Typography>
+                        <Typography variant="body2">{telefono}</Typography>
                     </Box>
 
                     <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
                         <SettingsIcon sx={{ color: 'gray' }} />
-                        <Typography variant='body2'>
+                        <Typography variant="body2">
                             {cant_sistemas} {cant_sistemas === 1 ? 'sistema' : 'sistemas'}
                         </Typography>
                     </Box>
