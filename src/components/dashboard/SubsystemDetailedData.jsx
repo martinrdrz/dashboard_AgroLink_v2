@@ -1,14 +1,45 @@
-import { Typography } from '@mui/material';
+import { Box, Typography } from '@mui/material';
 import { DetailedData } from './DetailedData';
 import { userDataStore } from '../../hooks';
 
 export const SubsystemDetailedData = ({ sysName, subsysName }) => {
     const { getSubsystemData } = userDataStore();
     const { titulo, tipo, dato_inicial, dato_final, datos: dataList } = getSubsystemData(sysName, subsysName);
+    const urlSubsystem = `/images/${tipo}.jpg`;
 
     return (
         <>
-            <Typography variant='h6' marginBottom={0} color='secondary'>
+            <Box sx={{ display: 'flex', flexDirection: 'column' }}>
+                {/* Primer fila se muestra icono de subsistema y al lado titulo subsistema*/}
+                <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                    {/* Imagen del lado izquierdo */}
+                    <Box
+                        component='img'
+                        src={urlSubsystem}
+                        alt='Molino'
+                        sx={{ width: 50, height: 50, objectFit: 'cover' }}
+                    />
+
+                    {/* Texto al lado derecho de la imagen */}
+                    <Box sx={{ marginLeft: '16px' }}>
+                        <Typography variant='body1' color='text.secondary'>
+                            {titulo}
+                        </Typography>
+                    </Box>
+                </Box>
+                {/* Segunda Fila */}
+                {/* //todo: cambiar el siguiente Typography por el componente DetailedData */}
+                <Typography variant='body1' marginBottom={2} marginTop={2}>
+                    Texto sobre los datos
+                </Typography>
+                {/* 
+                    {dataList.map((dataName, index) => (
+                        <DetailedData key={index} sysName={sysName} dataName={dataName} />
+                    ))}
+                 */}
+            </Box>
+
+            {/* <Typography variant='h6' marginBottom={0} color='secondary'>
                 Subsistema: {titulo}
             </Typography>
             <Typography variant='h6' marginBottom={0}>
@@ -19,7 +50,7 @@ export const SubsystemDetailedData = ({ sysName, subsysName }) => {
             </Typography>
             {dataList.map((dataName, index) => (
                 <DetailedData key={index} sysName={sysName} dataName={dataName} />
-            ))}
+            ))} */}
         </>
     );
 };
@@ -31,63 +62,3 @@ export const SubsystemDetailedData = ({ sysName, subsysName }) => {
 //       dato_inicial: 1,
 //       dato_final: 2
 // }
-
-//formato de "systemDataValues", continene todos los datos de un sistema particular, por ejemplo "sistema_1"
-// {
-//     dato_1: [ '21', '26', '50' ],
-//     dato_2: [ '-16', '-15', '60' ],
-//     dato_3: [ '-30', '-56', '70' ],
-//     dato_4: [ '6', '-4', '80' ]
-//   }
-
-//El valor de "systemData" es:
-//   {
-//     "canal_1": "1687674",
-//     "cant_canales_asignados": 1,
-//     "cant_datos": 4,
-//     "cant_subsistemas": 2,
-//     "readAPIkey_1": "K0118S8SRR1ZNXK1",
-//     "subtitulo": "Bebedero sobre parcela norte",
-//     "tipo": "bebedero",
-//     "titulo": "Bebedero Vacas",
-//     "dato_1": {
-//       "descripcion_alerta": "Molino posiblemente con problemas",
-//       "estado_alerta": 1,
-//       "tipo": "estado",
-//       "titulo": "Estado",
-//       "unidad": ""
-//     },
-//     "dato_2": {
-//       "descripcion_alerta": "Molino con poca agua de salida",
-//       "estado_alerta": 0,
-//       "tipo": "caudal",
-//       "titulo": "Caudal",
-//       "unidad": "l/s"
-//     },
-//     "dato_3": {
-//       "descripcion_alerta": "Tanque con poca agua",
-//       "estado_alerta": 0,
-//       "tipo": "nivel",
-//       "titulo": "Nivel agua",
-//       "unidad": "%"
-//     },
-//     "dato_4": {
-//       "descripcion_alerta": "Temperatura del agua muy alta",
-//       "estado_alerta": 0,
-//       "tipo": "temperatura",
-//       "titulo": "Temperatura",
-//       "unidad": "°C"
-//     },
-//     "subsistema_1": {
-//       "nombre": "molino norte",
-//       "tipo": "molino",
-//       "dato_inicial": 1,
-//       "dato_final": 2
-//     },
-//     "subsistema_2": {
-//       "nombre": "tanque norte",
-//       "tipo": "tanque",
-//       "dato_inicial": 3,
-//       "dato_final": 4
-//     },
-//   }

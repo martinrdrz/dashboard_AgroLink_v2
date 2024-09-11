@@ -1,4 +1,4 @@
-import { Typography } from '@mui/material';
+import { Box, Card, CardContent, Typography } from '@mui/material';
 import { SubsystemDetailedData } from './SubsystemDetailedData';
 import { userDataStore } from '../../hooks';
 
@@ -6,10 +6,51 @@ export const SystemDetailedData = ({ sysName }) => {
     const { getSystemData, getSubsystems } = userDataStore();
     const { titulo, subtitulo, tipo } = getSystemData(sysName);
     const subsystemList = getSubsystems(sysName);
+    const urlSystem = `/images/${tipo}.jpg`;
 
     return (
         <>
-            <Typography variant='h6' marginTop={5} color='secondary'>
+            <Card
+                sx={{ borderRadius: '16px', border: '1px solid #4CAF50', maxWidth: 400, padding: '8px', marginTop: 2 }}
+            >
+                <CardContent>
+                    <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                        {/* Imagen del lado izquierdo */}
+                        <Box
+                            component='img'
+                            src={urlSystem}
+                            alt='Aguada'
+                            sx={{ width: 50, height: 50, objectFit: 'cover' }}
+                        />
+
+                        {/* Texto al lado derecho de la imagen */}
+                        <Box sx={{ marginLeft: '16px' }}>
+                            <Typography variant='h6' component='div' sx={{ color: '#4CAF50', fontWeight: 'bold' }}>
+                                {titulo}
+                            </Typography>
+                            <Typography variant='body2' color='text.secondary'>
+                                {subtitulo}
+                            </Typography>
+                        </Box>
+                    </Box>
+
+                    {/* Línea verde debajo del contenido */}
+                    <Box sx={{ borderBottom: '1px solid #4CAF50', marginTop: 3, marginBottom: 1 }}></Box>
+
+                    {/* Línea verde debajo del contenido */}
+                    <Box sx={{ marginTop: 2, marginBottom: 2 }}>
+                        <Typography variant='body2' color='#4CAF50' sx={{ fontWeight: 'bold' }}>
+                            Integrado por:
+                        </Typography>
+                    </Box>
+
+                    {subsystemList.map((subsysName, index) => (
+                        <SubsystemDetailedData key={index} sysName={sysName} subsysName={subsysName} />
+                    ))}
+                </CardContent>
+            </Card>
+
+            {/* <Typography variant='h6' marginTop={5} color='secondary'>
                 Sistema: {titulo} - ({subtitulo})
             </Typography>
             <Typography variant='h6' marginBottom={1}>
@@ -17,68 +58,7 @@ export const SystemDetailedData = ({ sysName }) => {
             </Typography>
             {subsystemList.map((subsysName, index) => (
                 <SubsystemDetailedData key={index} sysName={sysName} subsysName={subsysName} />
-            ))}
+            ))} */}
         </>
     );
 };
-
-// El valor de "system" es:
-//   {
-//     "canal_1": "1687674",
-//     "cant_canales_asignados": 1,
-//     "cant_datos": 4,
-//     "cant_subsistemas": 2,
-//     "readAPIkey_1": "K0118S8SRR1ZNXK1",
-//     "subtitulo": "Bebedero sobre parcela norte",
-//     "tipo": "bebedero",
-//     "titulo": "Bebedero Vacas",
-//     "dato_1": {
-//       "descripcion_alerta": "Molino posiblemente con problemas",
-//       "estado_alerta": 1,
-//       "tipo": "estado",
-//       "titulo": "Estado",
-//       "unidad": ""
-//     },
-//     "dato_2": {
-//       "descripcion_alerta": "Molino con poca agua de salida",
-//       "estado_alerta": 0,
-//       "tipo": "caudal",
-//       "titulo": "Caudal",
-//       "unidad": "l/s"
-//     },
-//     "dato_3": {
-//       "descripcion_alerta": "Tanque con poca agua",
-//       "estado_alerta": 0,
-//       "tipo": "nivel",
-//       "titulo": "Nivel agua",
-//       "unidad": "%"
-//     },
-//     "dato_4": {
-//       "descripcion_alerta": "Temperatura del agua muy alta",
-//       "estado_alerta": 0,
-//       "tipo": "temperatura",
-//       "titulo": "Temperatura",
-//       "unidad": "°C"
-//     },
-//     "subsistema_1": {
-//       "nombre": "molino norte",
-//       "tipo": "molino",
-//       "dato_inicial": 1,
-//       "dato_final": 2
-//     },
-//     "subsistema_2": {
-//       "nombre": "tanque norte",
-//       "tipo": "tanque",
-//       "dato_inicial": 3,
-//       "dato_final": 4
-//     },
-//   }
-
-//El valor de "systemDataValues" es:
-//   {
-//     dato_1: [ '21', '26', '50' ],
-//     dato_2: [ '-16', '-15', '60' ],
-//     dato_3: [ '-30', '-56', '70' ],
-//     dato_4: [ '6', '-4', '80' ]
-//     ...
-//   }

@@ -7,6 +7,7 @@ export const SystemData = ({ sysName }) => {
     const { titulo, subtitulo, tipo } = getSystemData(sysName);
     const subsystemList = getSubsystems(sysName);
     const urlSystem = `/images/${tipo}.jpg`;
+    //const urlSystem = `/images/warning.gif`;
 
     return (
         <>
@@ -17,44 +18,38 @@ export const SystemData = ({ sysName }) => {
                     <Box sx={{ display: 'flex', alignItems: 'center' }}>
                         {/* Imagen del lado izquierdo */}
                         <Box
-                            component="img"
+                            component='img'
                             src={urlSystem}
-                            alt="Aguada"
+                            alt='Aguada'
                             sx={{ width: 50, height: 50, objectFit: 'cover' }}
                         />
 
                         {/* Texto al lado derecho de la imagen */}
                         <Box sx={{ marginLeft: '16px' }}>
-                            <Typography variant="h6" component="div" sx={{ color: '#4CAF50', fontWeight: 'bold' }}>
+                            <Typography variant='h6' component='div' sx={{ color: '#4CAF50', fontWeight: 'bold' }}>
                                 {titulo}
                             </Typography>
-                            <Typography variant="body2" color="text.secondary">
+                            <Typography variant='body2' color='text.secondary'>
                                 {subtitulo}
                             </Typography>
                         </Box>
                     </Box>
 
                     {/* Línea verde debajo del contenido */}
-                    <Box sx={{ borderBottom: '1px solid #4CAF50', marginTop: 3, marginBottom: 2 }}></Box>
+                    <Box sx={{ borderBottom: '1px solid #4CAF50', marginTop: 3, marginBottom: 1 }}></Box>
+
+                    {/* Línea verde debajo del contenido */}
+                    <Box sx={{ marginTop: 2, marginBottom: 2 }}>
+                        <Typography variant='body2' color='#4CAF50' sx={{ fontWeight: 'bold' }}>
+                            Integrado por:
+                        </Typography>
+                    </Box>
 
                     {subsystemList.map((subsysName, index) => (
                         <SubsystemData key={index} sysName={sysName} subsysName={subsysName} />
                     ))}
                 </CardContent>
             </Card>
-
-            {/* <Typography variant="h6" marginTop={4} color="secondary">
-                Sistema: {titulo}
-            </Typography>
-            <Typography variant="h6" marginBottom={0}>
-                Subtitulo: {subtitulo}
-            </Typography>
-            <Typography variant="h6" marginBottom={1}>
-                Tipo: {tipo}
-            </Typography>
-            {subsystemList.map((subsysName, index) => (
-                <SubsystemData key={index} sysName={sysName} subsysName={subsysName} />
-            ))} */}
         </>
     );
 };
