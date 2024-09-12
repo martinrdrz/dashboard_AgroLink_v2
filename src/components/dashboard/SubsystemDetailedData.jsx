@@ -9,34 +9,33 @@ export const SubsystemDetailedData = ({ sysName, subsysName }) => {
 
     return (
         <>
-            <Box sx={{ display: 'flex', flexDirection: 'column' }}>
+            <Box sx={{ display: 'flex', flexDirection: 'column', marginBottom: '10px' }}>
                 {/* Primer fila se muestra icono de subsistema y al lado titulo subsistema*/}
                 <Box sx={{ display: 'flex', alignItems: 'center' }}>
                     {/* Imagen del lado izquierdo */}
                     <Box
-                        component='img'
+                        component="img"
                         src={urlSubsystem}
-                        alt='Molino'
+                        alt="Molino"
                         sx={{ width: 50, height: 50, objectFit: 'cover' }}
                     />
 
                     {/* Texto al lado derecho de la imagen */}
                     <Box sx={{ marginLeft: '16px' }}>
-                        <Typography variant='body1' color='text.secondary'>
+                        <Typography variant="body1" color="text.secondary" fontWeight="bold">
                             {titulo}
                         </Typography>
                     </Box>
                 </Box>
                 {/* Segunda Fila */}
                 {/* //todo: cambiar el siguiente Typography por el componente DetailedData */}
-                <Typography variant='body1' marginBottom={2} marginTop={2}>
+                {/* <Typography variant='body1' marginBottom={2} marginTop={2}>
                     Texto sobre los datos
-                </Typography>
-                {/* 
-                    {dataList.map((dataName, index) => (
-                        <DetailedData key={index} sysName={sysName} dataName={dataName} />
-                    ))}
-                 */}
+                </Typography> */}
+
+                {dataList.map((dataName, index) => (
+                    <DetailedData key={index} sysName={sysName} dataName={dataName} />
+                ))}
             </Box>
 
             {/* <Typography variant='h6' marginBottom={0} color='secondary'>
