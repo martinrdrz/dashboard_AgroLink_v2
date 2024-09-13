@@ -6,7 +6,7 @@ export const SystemDetailedData = ({ sysName }) => {
     const { getSystemData, getSubsystems } = userDataStore();
     const { titulo, subtitulo, tipo } = getSystemData(sysName);
     const subsystemList = getSubsystems(sysName);
-    const urlSystem = `/images/${tipo}.jpg`;
+    const urlSystem = `/images/${tipo}.png`;
 
     return (
         <>
@@ -17,18 +17,18 @@ export const SystemDetailedData = ({ sysName }) => {
                     <Box sx={{ display: 'flex', alignItems: 'center' }}>
                         {/* Imagen del lado izquierdo */}
                         <Box
-                            component='img'
+                            component="img"
                             src={urlSystem}
-                            alt='Aguada'
+                            alt="Aguada"
                             sx={{ width: 50, height: 50, objectFit: 'cover' }}
                         />
 
                         {/* Texto al lado derecho de la imagen */}
                         <Box sx={{ marginLeft: '16px' }}>
-                            <Typography variant='h6' component='div' sx={{ color: '#4CAF50', fontWeight: 'bold' }}>
+                            <Typography variant="h6" component="div" sx={{ color: '#4CAF50', fontWeight: 'bold' }}>
                                 {titulo}
                             </Typography>
-                            <Typography variant='body2' color='text.secondary'>
+                            <Typography variant="body2" color="text.secondary">
                                 {subtitulo}
                             </Typography>
                         </Box>
@@ -39,7 +39,7 @@ export const SystemDetailedData = ({ sysName }) => {
 
                     {/* Línea verde debajo del contenido */}
                     <Box sx={{ marginTop: 2, marginBottom: 2 }}>
-                        <Typography variant='body2' color='#4CAF50' sx={{ fontWeight: 'bold' }}>
+                        <Typography variant="body2" color="#4CAF50" sx={{ fontWeight: 'bold' }}>
                             Integrado por:
                         </Typography>
                     </Box>

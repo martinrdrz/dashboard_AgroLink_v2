@@ -1,11 +1,80 @@
-import { Box, Button, Typography } from '@mui/material';
+import { useState } from 'react';
+import { Box, Button, Dialog, DialogContent, DialogTitle, Typography } from '@mui/material';
 import { userDataStore } from '../../hooks';
 import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
+import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
+import DragHandleIcon from '@mui/icons-material/DragHandle';
 import ShowChartIcon from '@mui/icons-material/ShowChart';
+//import { LineChart, xAxis, yAxis } from '@mui/x-charts';
+import { LineChart } from '@mui/x-charts';
 
 export const DetailedData = ({ sysName, dataName }) => {
     const { getData } = userDataStore();
     const { titulo, tipo, unidad, estado_alerta, descripcion_alerta, valores } = getData(sysName, dataName);
+    const [open, setOpen] = useState(false); // Estado para abrir o cerrar el diálogo
+    const imageData = `/images/${tipo}.png`;
+    const lastValue = valores.length > 0 ? valores[valores.length - 1] : 0;
+    const preLastValue = valores.length > 1 ? valores[valores.length - 2] : 0;
+
+    // Función para abrir el diálogo
+    const handleOpen = () => {
+        setOpen(true);
+    };
+
+    // Función para cerrar el diálogo
+    const handleClose = () => {
+        setOpen(false);
+    };
+
+    // Datos de ejemplo con fechas
+    const xAxisData = [
+        new Date('2023-09-01'),
+        new Date('2023-09-02'),
+        new Date('2023-09-03'),
+        new Date('2023-09-04'),
+        new Date('2023-09-05'),
+        new Date('2023-09-06'),
+    ];
+
+    const seriesData = [2, 5.5, 2, 8.5, 1.5, 5];
+
+    const getArrowIcon = () => {
+        //todo
+        if (lastValue - preLastValue > 0) {
+            return <ArrowUpwardIcon sx={{ fontSize: 25, color: '#FF9800' }} />;
+        } else if (lastValue - preLastValue < 0) {
+            return <ArrowDownwardIcon sx={{ fontSize: 25, color: '#FF9800' }} />;
+        } else {
+            return <DragHandleIcon sx={{ fontSize: 25, color: '#FF9800' }} />;
+        }
+    };
+
+    const visualizeWarning = () => {
+        //todo
+        if (Number(estado_alerta) === 1) {
+            return (
+                <Box sx={{ display: 'flex', alignItems: 'center', marginBottom: '0px' }}>
+                    <Box
+                        component="img"
+                        src="/images/warning.gif" // Cambia la ruta de la imagen a tu propia imagen de advertencia
+                        alt="Advertencia"
+                        sx={{
+                            width: 23,
+                            height: 23,
+                            objectFit: 'cover',
+                            marginLeft: '5px',
+                            marginRight: '15px',
+                        }}
+                    />
+                    <Typography variant="body1" sx={{ color: 'red', fontSize: '0.8rem' }}>
+                        {descripcion_alerta}
+                    </Typography>
+                </Box>
+            );
+        } else {
+            return null;
+        }
+    };
 
     return (
         <>
@@ -13,7 +82,7 @@ export const DetailedData = ({ sysName, dataName }) => {
                 sx={{
                     borderRadius: '16px',
                     border: '1px solid #4CAF50',
-                    maxWidth: 260,
+                    maxWidth: 220,
                     padding: '8px',
                     marginBottom: '8px',
                 }}
@@ -33,7 +102,7 @@ export const DetailedData = ({ sysName, dataName }) => {
                         component="div"
                         sx={{ color: '#FF9800', fontWeight: 'bold', margin: '0px' }}
                     >
-                        Caudal de agua
+                        {titulo}
                     </Typography>
                 </Box>
 
@@ -44,46 +113,41 @@ export const DetailedData = ({ sysName, dataName }) => {
                     {/* Imagen del grifo (reemplazar con tu propia imagen) */}
                     <Box
                         component="img"
-                        src="/images/nivelAgua.jpg" // Cambia la ruta de la imagen a tu propia imagen
-                        alt="Caudal"
-                        sx={{ width: 40, height: 40, objectFit: 'cover' }}
+                        src={imageData} // Cambia la ruta de la imagen a tu propia imagen
+                        alt={tipo}
+                        sx={{ width: 35, height: 35, objectFit: 'cover' }}
                     />
-                    {/* Valor del caudal */}
-                    <Typography variant="body1" component="div" sx={{ fontSize: 20 }}>
-                        50
-                    </Typography>
-                    <Typography variant="h5" component="div" sx={{ fontSize: 15 }}>
-                        l/s
-                    </Typography>
-                    {/* Iconos de flecha y botón con icono de gráfico */}
-                    <ArrowUpwardIcon sx={{ fontSize: 25, color: '#FF9800' }} />
-                    {/* Botón rectangular verde con icono ShowChart */}
-                    {/* <Button
-                        variant="contained"
-                        sx={{
-                            backgroundColor: '#4CAF50', // Verde de la gama MUI
-                            color: 'white',
-                            borderRadius: '8px',
-                            minWidth: '30px', // Ancho mínimo para que se vea rectangular
-                            padding: '4px', // Padding para darle el tamaño adecuado
-                            fontSize: '10px',
-                            '&:hover': {
-                                backgroundColor: '#388E3C', // Color verde más oscuro al pasar el mouse
-                            },
-                        }}
-                        startIcon={<ShowChartIcon />}
-                    >
-                        Datos
-                    </Button> */}
+                    {/* Valor del dato */}
+                    <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                        <Typography
+                            variant="body1"
+                            component="div"
+                            sx={{ fontSize: 20 }} // Ajustar el margen derecho del "50"
+                        >
+                            {lastValue}
+                        </Typography>
+                        <Typography
+                            variant="h5"
+                            component="div"
+                            sx={{ fontSize: 15, marginLeft: '8px' }} // Asegurarse de que no haya margen izquierdo en "l/s"
+                        >
+                            {unidad}
+                        </Typography>
+                    </Box>
 
+                    {/* Iconos de flecha y botón con icono de gráfico */}
+                    {getArrowIcon()}
+
+                    {/* Botón rectangular verde con icono ShowChart */}
                     <Button
                         variant="contained"
+                        onClick={handleOpen}
                         sx={{
                             backgroundColor: '#4CAF50', // Verde de la gama MUI
                             color: 'white',
                             borderRadius: '8px',
-                            minWidth: '26px', // Ancho mínimo para que se vea rectangular
-                            minHeight: '26px',
+                            minWidth: '25px', // Ancho mínimo para que se vea rectangular
+                            minHeight: '25px',
                             padding: '0px', // Padding para darle el tamaño adecuado
                             fontSize: '10px',
                             '&:hover': {
@@ -94,20 +158,47 @@ export const DetailedData = ({ sysName, dataName }) => {
                         <ShowChartIcon />
                     </Button>
                 </Box>
-                {/* //todo: Habilita o desabilitar el warnign segun sea necesario */}
+                {/* //todo: Habilita o desabilita el warning segun sea necesario */}
                 {/* Mensaje de advertencia con imagen de warning */}
-                {/* <Box sx={{ display: 'flex', alignItems: 'center', marginBottom: '0px' }}>
-                    <Box
-                        component="img"
-                        src="/images/warning.gif" // Cambia la ruta de la imagen a tu propia imagen de advertencia
-                        alt="Advertencia"
-                        sx={{ width: 23, height: 23, objectFit: 'cover', marginLeft: '5px', marginRight: '15px' }}
-                    />
-                    <Typography variant="body1" sx={{ color: 'red', fontSize: '0.8rem' }}>
-                        Límite inferior alcanzado.
-                    </Typography>
-                </Box> */}
+                {visualizeWarning()}
             </Box>
+
+            {/* Diálogo para mostrar el gráfico de líneas */}
+            <Dialog open={open} onClose={handleClose} fullWidth maxWidth="sm">
+                <DialogTitle>Historial de Datos</DialogTitle>
+                <DialogContent>
+                    <Box sx={{ width: '100%', height: 300 }}>
+                        <LineChart
+                            xAxis={[
+                                {
+                                    data: xAxisData,
+                                    scaleType: 'time', // Especifica que el eje X será de tipo temporal
+                                    labelFormatter: (date) => date.toLocaleDateString(), // Formatear las fechas
+                                },
+                            ]}
+                            series={[
+                                {
+                                    data: seriesData,
+                                    label: 'temperatura',
+                                },
+                            ]}
+                            width={500}
+                            height={300}
+                        />
+
+                        {/* <LineChart
+                            xAxis={[{ data: [1, 2, 3, 5, 8, 10] }]}
+                            series={[
+                                {
+                                    data: [2, 5.5, 2, 8.5, 1.5, 5],
+                                },
+                            ]}
+                            width={500}
+                            height={300}
+                        /> */}
+                    </Box>
+                </DialogContent>
+            </Dialog>
 
             {/* <Typography variant="h6" marginBottom={0}>
                 Dato titulo: {titulo}

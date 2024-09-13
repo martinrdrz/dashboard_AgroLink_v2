@@ -5,13 +5,22 @@ import { userDataStore } from '../../hooks';
 export const SubsystemDetailedData = ({ sysName, subsysName }) => {
     const { getSubsystemData } = userDataStore();
     const { titulo, tipo, dato_inicial, dato_final, datos: dataList } = getSubsystemData(sysName, subsysName);
-    const urlSubsystem = `/images/${tipo}.jpg`;
+    const urlSubsystem = `/images/${tipo}.png`;
 
     return (
         <>
-            <Box sx={{ display: 'flex', flexDirection: 'column', marginBottom: '10px' }}>
+            <Box sx={{ display: 'flex', flexDirection: 'column', marginBottom: '15px' }}>
                 {/* Primer fila se muestra icono de subsistema y al lado titulo subsistema*/}
-                <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                <Box
+                    sx={{
+                        display: 'flex',
+                        borderRadius: '16px',
+                        alignItems: 'center',
+                        backgroundColor: '#f2f1f1',
+                        marginBottom: '8px',
+                        padding: '3px',
+                    }}
+                >
                     {/* Imagen del lado izquierdo */}
                     <Box
                         component="img"
