@@ -5,7 +5,7 @@ import { userDataStore } from '../../hooks';
 export const SubsystemDetailedData = ({ sysName, subsysName }) => {
     const { getSubsystemData } = userDataStore();
     const { titulo, tipo, dato_inicial, dato_final, datos: dataList } = getSubsystemData(sysName, subsysName);
-    const urlSubsystem = `/images/${tipo}.png`;
+    const urlSubsystemImage = `/images/${tipo}.png`;
 
     return (
         <>
@@ -23,25 +23,20 @@ export const SubsystemDetailedData = ({ sysName, subsysName }) => {
                 >
                     {/* Imagen del lado izquierdo */}
                     <Box
-                        component="img"
-                        src={urlSubsystem}
-                        alt="Molino"
+                        component='img'
+                        src={urlSubsystemImage}
+                        alt={tipo}
                         sx={{ width: 50, height: 50, objectFit: 'cover' }}
                     />
 
                     {/* Texto al lado derecho de la imagen */}
                     <Box sx={{ marginLeft: '16px' }}>
-                        <Typography variant="body1" color="text.secondary" fontWeight="bold">
+                        <Typography variant='body1' color='text.secondary' fontWeight='bold'>
                             {titulo}
                         </Typography>
                     </Box>
                 </Box>
                 {/* Segunda Fila */}
-                {/* //todo: cambiar el siguiente Typography por el componente DetailedData */}
-                {/* <Typography variant='body1' marginBottom={2} marginTop={2}>
-                    Texto sobre los datos
-                </Typography> */}
-
                 {dataList.map((dataName, index) => (
                     <DetailedData key={index} sysName={sysName} dataName={dataName} />
                 ))}

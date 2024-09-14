@@ -66,6 +66,18 @@ export const userDataStore = () => {
         const dataWithValues = { ...data, valores: systemsDataValues?.[sysName][dataName] };
         return dataWithValues;
     };
+    //El dato devuelto, "dataWithValues", tiene el siguiente formato:
+    //     {
+    //       "descripcion_alerta": "Molino posiblemente con problemas",
+    //       "estado_alerta": 1,
+    //       "tipo": "estado",
+    //       "titulo": "Estado",
+    //       "unidad": ""
+    //       "valores": {
+    //              "valores": [10,20,30],
+    //              "fechas": ["2024-04-26T20:23:45Z", "2024-05-20T20:31:27Z", "2024-08-26T13:08:44Z"]
+    //}
+    //     },
 
     const setAllData = (systemsData) => {
         dispatch(doSetAllData(systemsData));

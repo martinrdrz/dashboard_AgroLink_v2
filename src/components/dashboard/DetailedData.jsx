@@ -13,8 +13,22 @@ export const DetailedData = ({ sysName, dataName }) => {
     const { titulo, tipo, unidad, estado_alerta, descripcion_alerta, valores } = getData(sysName, dataName);
     const [open, setOpen] = useState(false); // Estado para abrir o cerrar el diálogo
     const imageData = `/images/${tipo}.png`;
-    const lastValue = valores.length > 0 ? valores[valores.length - 1] : 0;
-    const preLastValue = valores.length > 1 ? valores[valores.length - 2] : 0;
+    const lastValue = valores.valores.length > 0 ? valores.valores[valores.valores.length - 1] : 0;
+    const preLastValue = valores.valores.length > 1 ? valores.valores[valores.valores.length - 2] : 0;
+
+    //const xAxisData = valores.fechas.map((date) => new Date(date));
+    const xAxisData = valores.fechas.map((date) => {
+        const formattedDate = new Date(date).toLocaleDateString('es-ES', {
+            day: 'numeric',
+            month: 'numeric',
+            //year: '2-digit',
+            hour: 'numeric',
+            minute: 'numeric',
+            second: 'numeric',
+        });
+        return formattedDate;
+    });
+    const seriesData = valores.valores.map((value) => Number(value));
 
     // Función para abrir el diálogo
     const handleOpen = () => {
@@ -25,18 +39,6 @@ export const DetailedData = ({ sysName, dataName }) => {
     const handleClose = () => {
         setOpen(false);
     };
-
-    // Datos de ejemplo con fechas
-    const xAxisData = [
-        new Date('2023-09-01'),
-        new Date('2023-09-02'),
-        new Date('2023-09-03'),
-        new Date('2023-09-04'),
-        new Date('2023-09-05'),
-        new Date('2023-09-06'),
-    ];
-
-    const seriesData = [2, 5.5, 2, 8.5, 1.5, 5];
 
     const getArrowIcon = () => {
         //todo
@@ -50,14 +52,13 @@ export const DetailedData = ({ sysName, dataName }) => {
     };
 
     const visualizeWarning = () => {
-        //todo
         if (Number(estado_alerta) === 1) {
             return (
                 <Box sx={{ display: 'flex', alignItems: 'center', marginBottom: '0px' }}>
                     <Box
-                        component="img"
-                        src="/images/warning.gif" // Cambia la ruta de la imagen a tu propia imagen de advertencia
-                        alt="Advertencia"
+                        component='img'
+                        src='/images/warning.gif' // Cambia la ruta de la imagen a tu propia imagen de advertencia
+                        alt='Advertencia'
                         sx={{
                             width: 23,
                             height: 23,
@@ -66,7 +67,7 @@ export const DetailedData = ({ sysName, dataName }) => {
                             marginRight: '15px',
                         }}
                     />
-                    <Typography variant="body1" sx={{ color: 'red', fontSize: '0.8rem' }}>
+                    <Typography variant='body1' sx={{ color: 'red', fontSize: '0.8rem' }}>
                         {descripcion_alerta}
                     </Typography>
                 </Box>
@@ -98,8 +99,8 @@ export const DetailedData = ({ sysName, dataName }) => {
                     }}
                 >
                     <Typography
-                        variant="body1"
-                        component="div"
+                        variant='body1'
+                        component='div'
                         sx={{ color: '#FF9800', fontWeight: 'bold', margin: '0px' }}
                     >
                         {titulo}
@@ -112,7 +113,7 @@ export const DetailedData = ({ sysName, dataName }) => {
                 >
                     {/* Imagen del grifo (reemplazar con tu propia imagen) */}
                     <Box
-                        component="img"
+                        component='img'
                         src={imageData} // Cambia la ruta de la imagen a tu propia imagen
                         alt={tipo}
                         sx={{ width: 35, height: 35, objectFit: 'cover' }}
@@ -120,15 +121,15 @@ export const DetailedData = ({ sysName, dataName }) => {
                     {/* Valor del dato */}
                     <Box sx={{ display: 'flex', alignItems: 'center' }}>
                         <Typography
-                            variant="body1"
-                            component="div"
+                            variant='body1'
+                            component='div'
                             sx={{ fontSize: 20 }} // Ajustar el margen derecho del "50"
                         >
                             {lastValue}
                         </Typography>
                         <Typography
-                            variant="h5"
-                            component="div"
+                            variant='h5'
+                            component='div'
                             sx={{ fontSize: 15, marginLeft: '8px' }} // Asegurarse de que no haya margen izquierdo en "l/s"
                         >
                             {unidad}
@@ -140,7 +141,7 @@ export const DetailedData = ({ sysName, dataName }) => {
 
                     {/* Botón rectangular verde con icono ShowChart */}
                     <Button
-                        variant="contained"
+                        variant='contained'
                         onClick={handleOpen}
                         sx={{
                             backgroundColor: '#4CAF50', // Verde de la gama MUI
@@ -158,13 +159,13 @@ export const DetailedData = ({ sysName, dataName }) => {
                         <ShowChartIcon />
                     </Button>
                 </Box>
-                {/* //todo: Habilita o desabilita el warning segun sea necesario */}
+
                 {/* Mensaje de advertencia con imagen de warning */}
                 {visualizeWarning()}
             </Box>
 
             {/* Diálogo para mostrar el gráfico de líneas */}
-            <Dialog open={open} onClose={handleClose} fullWidth maxWidth="sm">
+            <Dialog open={open} onClose={handleClose} fullWidth maxWidth='sm'>
                 <DialogTitle>Historial de Datos</DialogTitle>
                 <DialogContent>
                     <Box sx={{ width: '100%', height: 300 }}>
@@ -172,16 +173,32 @@ export const DetailedData = ({ sysName, dataName }) => {
                             xAxis={[
                                 {
                                     data: xAxisData,
-                                    scaleType: 'time', // Especifica que el eje X será de tipo temporal
-                                    labelFormatter: (date) => date.toLocaleDateString(), // Formatear las fechas
+                                    scaleType: 'point', // Especifica que el eje X será de tipo temporal
+                                    //labelFormatter: (date) => date.toLocaleDateString('es-ES'), // Formateador
+                                    //     const day = date.getDate();
+                                    //     const month = date.getMonth() + 1; // Los meses son 0-indexed
+                                    //     return `${day}/${month}`;
+                                    // },
+                                    label: 'Fecha',
+                                    tickInterval: 'auto', // Muestra solo algunos ticks, uno cada dos valores
+                                },
+                            ]}
+                            yAxis={[
+                                {
+                                    label: tipo.charAt(0).toUpperCase() + tipo.slice(1),
                                 },
                             ]}
                             series={[
                                 {
                                     data: seriesData,
-                                    label: 'temperatura',
+                                    label: tipo.charAt(0).toUpperCase() + tipo.slice(1),
+                                    curve: 'linear',
+                                    //showMark: false,
                                 },
                             ]}
+                            grid={{
+                                horizontal: true,
+                            }}
                             width={500}
                             height={300}
                         />
