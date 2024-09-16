@@ -6,7 +6,7 @@ export const SystemData = ({ sysName }) => {
     const { getSystemData, getSubsystems } = userDataStore(); // state es para control carga inicial
     const { titulo, subtitulo, tipo } = getSystemData(sysName);
     const subsystemList = getSubsystems(sysName);
-    const urlSystem = `/images/${tipo}.jpg`;
+    const urlSystem = `/images/${tipo}.png`;
     //const urlSystem = `/images/warning.gif`;
 
     return (
