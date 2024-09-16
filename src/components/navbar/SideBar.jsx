@@ -20,7 +20,7 @@ import { DashboardArea } from './DashboardArea';
 import { Button } from '@mui/material';
 import LogoutIcon from '@mui/icons-material/Logout';
 import { useAuthStore } from '../../hooks';
-import fondoImg from '../../../public/images/textoAgrolink.png';
+import fondoImg from '/images/textoAgrolink.png';
 
 const drawerWidth = 240;
 
