@@ -19,7 +19,7 @@ import { NavLink } from 'react-router-dom';
 import { DashboardArea } from './DashboardArea';
 import { Button } from '@mui/material';
 import LogoutIcon from '@mui/icons-material/Logout';
-import { useAuthStore } from '../../hooks';
+import { useAuth } from '../../hooks/useAuth';
 import fondoImg from '/images/textoAgrolink.png';
 
 const drawerWidth = 240;
@@ -90,7 +90,7 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
 export const SideBar = ({ navArrayLinks }) => {
     const theme = useTheme();
     const [open, setOpen] = React.useState(false);
-    const { startLogout } = useAuthStore();
+    const { startLogout } = useAuth();
 
     const handleDrawerOpen = () => {
         setOpen(true);

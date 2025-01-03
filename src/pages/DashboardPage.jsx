@@ -4,13 +4,15 @@ import Typography from '@mui/material/Typography';
 import { CircularProgress } from '@mui/material';
 import { agrolinkApi } from '../api/agrolinkApi';
 import { SystemDetailedData, UserSystemData } from '../components/dashboard';
-import { useSelector } from 'react-redux';
+//import { useSelector } from 'react-redux';
+import { useAuth } from '../hooks';
 import { userDataStore } from '../hooks';
 
 export const DashboardPage = () => {
     const dataValuesCount = Number(import.meta.env.VITE_DATA_VALUES_COUNT);
     const dataValuesIntervalUpdate = Number(import.meta.env.VITE_DATA_VALUES_INTERVAL_UPDATE);
-    const { email } = useSelector((state) => state.auth);
+    //const { email } = useSelector((state) => state.auth);
+    const { email } = useAuth();
     const [valuesQueryState, setValuesQueryState] = useState('first_load'); //state para control carga inicial de valoresde los datos
     const systemList = [];
     const { status: systemsDataState, setValues, getSystems } = userDataStore(); // state es para control carga inicial
@@ -36,7 +38,7 @@ export const DashboardPage = () => {
     const renderContent = () => {
         if (systemsDataState === 'loading' || valuesQueryState == 'first_load') {
             return (
-                <Box display="flex" justifyContent="center" alignItems="center" height="20rem">
+                <Box display='flex' justifyContent='center' alignItems='center' height='20rem'>
                     <CircularProgress size={80} />
                 </Box>
             );
@@ -51,7 +53,7 @@ export const DashboardPage = () => {
             );
         } else if (systemsDataState === 'error' || valuesQueryState == 'error') {
             return (
-                <Typography variant="h6" color="error" marginBottom={2}>
+                <Typography variant='h6' color='error' marginBottom={2}>
                     Error al cargar los datos. Inténtalo de nuevo más tarde.
                 </Typography>
             );
@@ -61,7 +63,7 @@ export const DashboardPage = () => {
     return (
         <>
             {/* {console.log(systemUserDataValues)} */}
-            <Typography variant="h5" marginBottom={2}>
+            <Typography variant='h5' marginBottom={2}>
                 Dashboard
             </Typography>
             {renderContent()}

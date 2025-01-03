@@ -1,9 +1,9 @@
 import { configureStore } from '@reduxjs/toolkit';
-import { authSlice, userDataSlice } from './';
+import { userDataSlice } from './';
 
 export const store = configureStore({
     reducer: {
-        auth: authSlice.reducer,
+        //auth: authSlice.reducer,
         userData: userDataSlice.reducer,
     },
     middleware: (getDefaultMiddleware) =>
